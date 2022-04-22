@@ -81,3 +81,39 @@ Content-Type: application/json
 
 ### destroy
 DELETE http://localhost:3000/users/3.json
+
+
+
+# Event CRUD =======
+### index
+GET http://localhost:3000/events.json
+
+### show
+GET http://localhost:3000/events/1.json
+
+### create
+POST http://localhost:3000/events.json
+Content-Type: application/json
+
+{
+  "date": "2022-04-29",
+  "start": "12:00:00",
+  "end": "13:00:00",
+  "user_id": 1,
+  "duration_total": "1:00:00"
+}
+
+### update
+PATCH http://localhost:3000/events/2.json
+Content-Type: application/json
+
+{
+  "date": "2022-04-29",
+  "start": "12:00:00",
+  "end": "13:00:00",
+  "user_id": 2,
+  "duration_total": "1:00:00"
+}
+
+### destroy
+DELETE http://localhost:3000/events/2.json
