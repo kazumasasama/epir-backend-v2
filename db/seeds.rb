@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+Menu.create!(title: "VIO", duration: Time.zone.parse('01:00'), price: 150, description: "Sensitive area")
+Menu.create!(title: "Arms", duration: Time.zone.parse('00:30'), price: 100, description: "Both arms")
+Menu.create!(title: "Legs", duration: Time.zone.parse('01:00'), price: 140, description: "Both legs")
