@@ -1,11 +1,11 @@
 # Menu CRUD ==========
-###
+### index
 GET http://localhost:3000/menus.json
 
-###
+### show
 GET http://localhost:3000/menus/3.json
 
-###
+### create
 POST http://localhost:3000/menus.json
 Content-Type: application/json
 
@@ -16,7 +16,7 @@ Content-Type: application/json
   "description": "Full face"
 }
 
-###
+### update
 PATCH http://localhost:3000/menus/4.json
 Content-Type: application/json
 
@@ -27,5 +27,57 @@ Content-Type: application/json
   "description": "Full face"
 }
 
-###
+### delete
 DELETE http://localhost:3000/menus/4.json
+
+
+
+# User CRUD ==========
+### index
+GET http://localhost:3000/users.json
+
+### show
+GET http://localhost:3000/users/1.json
+
+### create
+POST http://localhost:3000/users.json
+Content-Type: application/json
+
+{
+  "first_name": "Azumi",
+  "last_name": "Kobayashi",
+  "password": "password",
+  "email": "test@test.com",
+  "phone": "123-456-7890",
+  "gender": "female",
+  "zip": "10001",
+  "state": "NY",
+  "city": "New York",
+  "address": "20 Hudson Yards",
+  "note": "This is a note for Azumi",
+  "birthday": "1981-10-07",
+  "status": "admin"
+}
+
+### update
+PATCH http://localhost:3000/users/4.json
+Content-Type: application/json
+
+{
+  "first_name": "Test First_name",
+  "last_name": "Test Last_name",
+  "password": "password",
+  "email": "test@test.com",
+  "phone": "123-456-7890",
+  "gender": "n/a",
+  "zip": "10001",
+  "state": "NY",
+  "city": "New York",
+  "address": "20 Hudson Yards",
+  "note": "This is a note for Azumi",
+  "birthday": "2022-04-22",
+  "status": "system"
+}
+
+### destroy
+DELETE http://localhost:3000/users/3.json
