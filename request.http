@@ -117,3 +117,39 @@ Content-Type: application/json
 
 ### destroy
 DELETE http://localhost:3000/events/2.json
+
+
+
+# EventMenu CRUD ==========
+### index
+GET http://localhost:3000/event_menus.json
+
+### show
+GET http://localhost:3000/event_menus/1.json
+
+### create
+POST http://localhost:3000/event_menus.json
+Content-Type: application/json
+
+{
+  "event_id": 1,
+  "menu_id": 1,
+  "user_id": 1,
+  "status": "booked"
+}
+
+### update
+PATCH http://localhost:3000/event_menus/1.json
+Content-Type: application/json
+
+{
+  "event_id": 1,
+  "menu_id": 1,
+  "user_id": 1,
+  "status": "booked"
+}
+
+### destroy
+DELETE http://localhost:3000/event_menus/3.json
+
+
