@@ -41,27 +41,18 @@
 #   status: "booked"
 # )
 
-BusinessTime.create!(
-  date: "2022-04-29",
-  time: "10:00:00",
-  available: true,
-  event_id: nil,
-)
-BusinessTime.create!(
-  date: "2022-04-29",
-  time: "10:30:00",
-  available: true,
-  event_id: nil,
-)
-BusinessTime.create!(
-  date: "2022-04-29",
-  time: "11:00:00",
-  available: false,
-  event_id: 1,
-)
-BusinessTime.create!(
-  date: "2022-04-29",
-  time: "11:30:00",
-  available: false,
-  event_id: 1,
-)
+
+# This file will be executed once in a day by Heroku Scheduler
+# Comment out all seeds except BusinessTime
+
+start_time = Time.zone.parse("10:00:00")
+time_slot = 1800 # 30 min
+
+16.times do
+  BusinessTime.create!(
+    date: Date.current,
+    time: start_time,
+    event_id: nil,
+  )
+  start_time += time_slot
+end
