@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :menus
   resources :events
   resources :event_menus
+  resources :business_times
 end

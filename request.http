@@ -150,6 +150,38 @@ Content-Type: application/json
 }
 
 ### destroy
-DELETE http://localhost:3000/event_menus/3.json
+DELETE http://localhost:3000/event_menus/5.json
 
 
+
+# BusinessTime CRUD
+### index
+GET http://localhost:3000/business_times.json
+
+### show
+GEt http://localhost:3000/business_times/1.json
+
+### create
+POST http://localhost:3000/business_times.json
+Content-Type: application/json
+
+{
+  "date": "2022-04-29",
+  "time": "2000-01-01T13:00:00.000Z",
+  "available": false,
+  "event_id": 3
+}
+
+### update
+PATCH http://localhost:3000/business_times/7.json
+Content-Type: application/json
+
+{
+  "date": "2022-04-30",
+  "time": "2000-01-01T13:00:00.000Z",
+  "available": false,
+  "event_id": 3
+}
+
+### destroy
+DELETE http://localhost:3000/business_times/7.json

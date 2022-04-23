@@ -40,3 +40,28 @@
 #   user_id:  1,
 #   status: "booked"
 # )
+
+BusinessTime.create!(
+  date: "2022-04-29",
+  time: "10:00:00",
+  available: true,
+  event_id: nil,
+)
+BusinessTime.create!(
+  date: "2022-04-29",
+  time: "10:30:00",
+  available: true,
+  event_id: nil,
+)
+BusinessTime.create!(
+  date: "2022-04-29",
+  time: "11:00:00",
+  available: false,
+  event_id: 1,
+)
+BusinessTime.create!(
+  date: "2022-04-29",
+  time: "11:30:00",
+  available: false,
+  event_id: 1,
+)
