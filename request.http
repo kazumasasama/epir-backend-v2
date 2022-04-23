@@ -96,7 +96,7 @@ POST http://localhost:3000/events.json
 Content-Type: application/json
 
 {
-  "date": "2022-04-29",
+  "date": "2022-04-23",
   "start": "12:00:00",
   "end": "13:00:00",
   "user_id": 1,

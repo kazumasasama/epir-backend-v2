@@ -19,8 +19,17 @@ class EventsController < ApplicationController
       duration_total: params[:duration_total],
     )
     if event.save
+      business_times = BusinessTime.where(date: params[:date], time: params[:start]..params[:end])
+      business_times.each do |time|
+        time.available = false
+        time.event_id = Event.last.id
+        time.save
+      end
       render json: event.as_json
     else
+      business_times.each do |time|
+        time.delete
+      end
       render json: {errors: event.errors.full_message}
     end
   end
