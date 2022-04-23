@@ -97,10 +97,11 @@ Content-Type: application/json
 
 {
   "date": "2022-04-23",
-  "start": "12:00:00",
-  "end": "13:00:00",
+  "start": "13:00:00",
+  "end": "14:00:00",
   "user_id": 1,
-  "duration_total": "1:00:00"
+  "duration_total": "1:00:00",
+  "menus": [1]
 }
 
 ### update

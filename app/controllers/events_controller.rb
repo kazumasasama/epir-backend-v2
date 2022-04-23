@@ -11,6 +11,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    # create Event
     event = Event.new(
       date: params[:date],
       start: params[:start],
@@ -19,11 +20,23 @@ class EventsController < ApplicationController
       duration_total: params[:duration_total],
     )
     if event.save
+      # create BusinessTime
       business_times = BusinessTime.where(date: params[:date], time: params[:start]..params[:end])
       business_times.each do |time|
         time.available = false
         time.event_id = Event.last.id
         time.save
+      end
+      # create EventMenu
+      menu_ids = params[:menus]
+      menu_ids.each do |menu_id|
+        event_menu = EventMenu.new(
+          event_id: Event.last.id,
+          menu_id: menu_id,
+          user_id: params[:user_id],
+          status: "booked",
+        )
+        event_menu.save
       end
       render json: event.as_json
     else
