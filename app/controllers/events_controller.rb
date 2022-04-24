@@ -20,12 +20,15 @@ class EventsController < ApplicationController
       duration_total: params[:duration_total],
     )
     if event.save
-      # create BusinessTime
-      business_times = BusinessTime.where(date: params[:date], time: params[:start]..params[:end])
-      business_times.each do |time|
-        time.available = false
-        time.event_id = Event.last.id
-        time.save
+      # update BusinessTime
+      business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
+      business_times.each do |business_time|
+        business_time.available = false
+        business_time.event_id = Event.last.id
+        business_time.save
+        if !business_time.save
+          render json: {errors: business_time.errors.full_message}
+        end
       end
       # create EventMenu
       menu_ids = params[:menus]
@@ -37,11 +40,14 @@ class EventsController < ApplicationController
           status: "booked",
         )
         event_menu.save
+        if !event_menu.save
+          render json: {errors: event_menu.errors.full_message}
+        end
       end
       render json: event.as_json
     else
-      business_times.each do |time|
-        time.delete
+      business_times.each do |business_time|
+        business_time.delete
       end
       render json: {errors: event.errors.full_message}
     end
@@ -49,12 +55,52 @@ class EventsController < ApplicationController
 
   def update
     event = Event.find(params[:id])
+    business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
+    business_times.each do |business_time|
+      business_time.available = true
+      # business_time.event_id = 1
+      business_time.save
+      if !business_time.save
+        render json: {errors: business_time.errors.full_message}
+      end
+    end
     event.date = params[:date]
     event.start = params[:start]
     event.end = params[:end]
     event.user_id = params[:user_id]
     event.duration_total = params[:duration_total]
     if event.save
+      business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
+      business_times.each do |business_time|
+        business_time.available = false
+        business_time.event_id = Event.last.id
+        business_time.save
+        if !business_time.save
+          render json: {errors: business_time.errors.full_message}
+        end
+      end
+      menus = EventMenu.where(event_id: event.id, status: "booked")
+      menus.each do |menu|
+        menu.status = "canceled"
+        menu.save
+        if !menu.save
+          render json: {errors: menu.errors.full_message}
+        end
+      end
+      menu_ids = params[:menus]
+      menu_ids.each do |menu_id|
+        event_menu = EventMenu.new(
+          event_id: event.id,
+          menu_id: menu_id,
+          user_id: params[:user_id],
+          status: "booked"
+        )
+        event_menu.save
+        if !event_menu.save
+          render json: {errors: event_menu.errors.full_message}
+        end
+      end
+
       render json: event.as_json
     else
       render json: {errors: event.errors.full_message}
@@ -63,8 +109,25 @@ class EventsController < ApplicationController
 
   def destroy
     event = Event.find(params[:id])
+    business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
+    business_times.each do |business_time|
+      business_time.available = true
+      # business_time.event_id = 1
+      business_time.save
+      if !business_time.save
+        render json: {errors: business_time.errors.full_message}
+      end
+    end
+    event_menus = event.event_menus
+    event_menus.each do |em|
+      em.status = "canceled"
+      em.save
+      if !em.save
+        render json: {errors: em.errors.full_message}
+      end
+    end
     if event.delete
-      render json: event.as_json
+      render json: {message: "Event Deleted"}
     else
       render json: {errors: event.errors.full_message}
     end

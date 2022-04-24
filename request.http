@@ -97,27 +97,28 @@ Content-Type: application/json
 
 {
   "date": "2022-04-23",
-  "start": "13:00:00",
-  "end": "14:00:00",
+  "start": "14:00:00",
+  "end": "15:30:00",
   "user_id": 1,
-  "duration_total": "1:00:00",
-  "menus": [1]
+  "duration_total": "1:30:00",
+  "menus": [1, 2]
 }
 
 ### update
-PATCH http://localhost:3000/events/2.json
+PATCH http://localhost:3000/events/22.json
 Content-Type: application/json
 
 {
-  "date": "2022-04-29",
-  "start": "12:00:00",
-  "end": "13:00:00",
-  "user_id": 2,
-  "duration_total": "1:00:00"
+  "date": "2022-04-23",
+  "start": "14:00:00",
+  "end": "16:30:00",
+  "user_id": 1,
+  "duration_total": "2:30:00",
+  "menus": [1, 2, 3]
 }
 
 ### destroy
-DELETE http://localhost:3000/events/2.json
+DELETE http://localhost:3000/events/21.json
 
 
 
