@@ -105,7 +105,7 @@ Content-Type: application/json
 }
 
 ### update
-PATCH http://localhost:3000/events/22.json
+PATCH http://localhost:3000/events/24.json
 Content-Type: application/json
 
 {
@@ -118,7 +118,7 @@ Content-Type: application/json
 }
 
 ### destroy
-DELETE http://localhost:3000/events/21.json
+DELETE http://localhost:3000/events/23.json
 
 
 

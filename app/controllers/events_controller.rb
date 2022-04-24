@@ -24,7 +24,6 @@ class EventsController < ApplicationController
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
       business_times.each do |business_time|
         business_time.available = false
-        business_time.event_id = Event.last.id
         business_time.save
         if !business_time.save
           render json: {errors: business_time.errors.full_message}
@@ -58,7 +57,6 @@ class EventsController < ApplicationController
     business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
     business_times.each do |business_time|
       business_time.available = true
-      # business_time.event_id = 1
       business_time.save
       if !business_time.save
         render json: {errors: business_time.errors.full_message}
@@ -73,7 +71,6 @@ class EventsController < ApplicationController
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
       business_times.each do |business_time|
         business_time.available = false
-        business_time.event_id = Event.last.id
         business_time.save
         if !business_time.save
           render json: {errors: business_time.errors.full_message}
@@ -112,7 +109,6 @@ class EventsController < ApplicationController
     business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
     business_times.each do |business_time|
       business_time.available = true
-      # business_time.event_id = 1
       business_time.save
       if !business_time.save
         render json: {errors: business_time.errors.full_message}
