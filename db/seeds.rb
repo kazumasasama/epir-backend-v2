@@ -32,29 +32,38 @@ Event.create!(
   user_id: 1,
 )
 
-# EventMenu.create!(
-#   event_id: 1,
-#   menu_id:  1,
-#   user_id:  1,
-#   status: "booked"
-# )
+time_slot = 1800 # 30 min
+date = Date.current
+90.times do
+  start_time = Time.zone.parse("10:00:00")
+  16.times do
+    BusinessTime.create!(
+      date: date,
+      time: start_time,
+      available: true,
+      event_id: 22,
+    )
+    start_time += time_slot
+  end
+  date += 1
+end
 
 
 # This file will be executed once a day at 12:00 AM by Heroku Scheduler
 # Comment out all seeds except BusinessTime below
 # =======================
 
-start_time = Time.zone.parse("10:00:00")
-time_slot = 1800 # 30 min
-
-16.times do
-  BusinessTime.create!(
-    date: Date.current,
-    time: start_time,
-    available: true,
-    event_id: 1,
-  )
-  start_time += time_slot
-end
+# time_slot = 1800 # 30 min
+# date = Date.current
+# start_time = Time.zone.parse("10:00:00")
+#   16.times do
+#     BusinessTime.create!(
+#       date: date,
+#       time: start_time,
+#       available: true,
+#       event_id: 1,
+#     )
+#     start_time += time_slot
+#   end
 
 # =======================
