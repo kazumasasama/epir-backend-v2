@@ -15,6 +15,7 @@ class UsersController < ApplicationController
       first_name: params[:first_name],
       last_name: params[:last_name],
       password: params[:password],
+      password_confirmation: params[:password_confirmation],
       email: params[:email],
       phone: params[:phone],
       gender: params[:gender],
@@ -35,19 +36,20 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    user.first_name = params[:first_name]
-    user.last_name = params[:last_name]
-    user.password = params[:password]
-    user.email = params[:email]
-    user.phone = params[:phone]
-    user.gender = params[:gender]
-    user.zip = params[:zip]
-    user.state = params[:state]
-    user.city = params[:city]
-    user.address = params[:address]
-    user.note = params[:note]
-    user.birthday = params[:birthday]
-    user.status = params[:status]
+    user.first_name = params[:first_name] || user.first_name
+    user.last_name = params[:last_name] || user.last_name
+    user.password = params[:password] || user.password
+    password_confirmation = params[:password_confirmation]
+    user.email = params[:email] || user.email
+    user.phone = params[:phone] || user.phone
+    user.gender = params[:gender] || user.gender
+    user.zip = params[:zip] || user.zip
+    user.state = params[:state] || user.state
+    user.city = params[:city] || user.city
+    user.address = params[:address] || user.address
+    user.note = params[:note] || user.note
+    user.birthday = params[:birthday] || user.birthday
+    user.status = params[:status] || user.status
     if user.save
       render json: user.as_json
     else
