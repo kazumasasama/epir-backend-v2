@@ -1,3 +1,15 @@
+# Authentication ==========
+### Sessions create (login)
+POST http://localhost:3000/sessions.json
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "password"
+}
+
+
+
 # Menu CRUD ==========
 ### index
 GET http://localhost:3000/menus.json
@@ -47,6 +59,7 @@ Content-Type: application/json
   "first_name": "Azumi",
   "last_name": "Kobayashi",
   "password": "password",
+  "password_confirmation": "password",
   "email": "test@test.com",
   "phone": "123-456-7890",
   "gender": "female",
@@ -60,13 +73,14 @@ Content-Type: application/json
 }
 
 ### update
-PATCH http://localhost:3000/users/4.json
+PATCH http://localhost:3000/users/2.json
 Content-Type: application/json
 
 {
   "first_name": "Test First_name",
   "last_name": "Test Last_name",
   "password": "password",
+  "password_confirmation": "password",
   "email": "test@test.com",
   "phone": "123-456-7890",
   "gender": "n/a",
@@ -80,7 +94,7 @@ Content-Type: application/json
 }
 
 ### destroy
-DELETE http://localhost:3000/users/3.json
+DELETE http://localhost:3000/users/1.json
 
 
 
