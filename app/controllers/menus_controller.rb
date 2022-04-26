@@ -1,5 +1,7 @@
 class MenusController < ApplicationController
 
+  before_action: authenticate_admin, only: %i[create update destroy]
+
   def index
     menus = Menu.all
     render json: menus.as_json
