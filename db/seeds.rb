@@ -7,30 +7,30 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-# Menu.create!(title: "VIO", duration: Time.zone.parse('01:00'), price: 150, description: "Sensitive area")
-# Menu.create!(title: "Arms", duration: Time.zone.parse('00:30'), price: 100, description: "Both arms")
-# Menu.create!(title: "Legs", duration: Time.zone.parse('01:00'), price: 140, description: "Both legs")
+Menu.create!(title: "VIO", duration: 60, price: 150, description: "Sensitive area")
+Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
+Menu.create!(title: "Legs", duration: 60, price: 140, description: "Both legs")
 
-# User.create!(
-#   first_name: "Kaz",
-#   last_name: "Takai",
-#   password: "password",
-#   email: "em@il.com",
-#   phone: "347-695-5677",
-#   gender: "male",
-#   zip: 10001,
-#   state: "NY",
-#   city: "New York",
-#   address: "545 W 30th St",
-#   note: "This is a note for Kaz",
-#   birthday: "1984-10-24",
-#   status: "system"
-# )
+User.create!(
+  first_name: "Kaz",
+  last_name: "Takai",
+  password: "password",
+  email: "em@il.com",
+  phone: "347-695-5677",
+  gender: "male",
+  zip: 10001,
+  state: "NY",
+  city: "New York",
+  address: "545 W 30th St",
+  note: "This is a note for Kaz",
+  birthday: "1984-10-24",
+  status: "system"
+)
 
-# Event.create!(
-#   date: Date.current,
-#   user_id: 1,
-# )
+Event.create!(
+  date: Date.current,
+  user_id: 1,
+)
 
 time_slot = 1800 # 30 min
 date = Date.current
