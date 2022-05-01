@@ -4,7 +4,7 @@ POST http://localhost:3000/sessions.json
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "takaik@yahoo.com",
   "password": "password"
 }
 
@@ -101,6 +101,8 @@ DELETE http://localhost:3000/users/1.json
 # Event CRUD =======
 ### index
 GET http://localhost:3000/events.json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NTE1MDE0Mjh9.KStBmwDZZJTgHTZ7cuA_NS_dzYd-kBWqFg4q6TN62gI
 
 ### show
 GET http://localhost:3000/events/1.json
