@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-
+Time.zone = 'Eastern Time (US & Canada)'
 
 Menu.create!(title: "VIO", duration: 60, price: 150, description: "Sensitive area")
 Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
@@ -27,22 +27,17 @@ User.create!(
   status: "system"
 )
 
-Event.create!(
-  date: Date.current,
-  user_id: 1,
-)
-
-time_slot = 1800 # 30 min
 date = Date.current
+
 90.times do
   start_time = Time.zone.parse("10:00:00")
-  16.times do
+  20.times do
     BusinessTime.create!(
       date: date,
       time: start_time,
       available: true
     )
-    start_time += time_slot
+    start_time += 1800.seconds # 30 min
   end
   date += 1
 end
@@ -55,14 +50,13 @@ end
 # time_slot = 1800 # 30 min
 # date = Date.current
 # start_time = Time.zone.parse("10:00:00")
-#   16.times do
-#     BusinessTime.create!(
-#       date: date,
-#       time: start_time,
-#       available: true,
-#       event_id: 1,
-#     )
-#     start_time += time_slot
-#   end
+# 20.times do
+#   BusinessTime.create!(
+#     date: date,
+#     time: start_time,
+#     available: true
+#   )
+#   start_time += 1800.seconds # 30 min
+# end
 
 # =======================
