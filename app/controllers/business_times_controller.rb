@@ -1,7 +1,7 @@
 class BusinessTimesController < ApplicationController
 
   def index
-    business_times = BusinessTime.where(available: true)
+    business_times = BusinessTime.all
     render json: business_times.as_json
   end
 
