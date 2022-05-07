@@ -3,13 +3,13 @@ class EventsController < ApplicationController
   before_action :authenticate_user, only: %i[index show update destroy]
 
   def index
-    events = Event.all
-    render json: events.as_json
+    @events = Event.all
+    render template: "events/index"
   end
 
   def show
-    event = Event.find(params[:id])
-    render json: event.as_json
+    @event = Event.find(params[:id])
+    render template: "events/show"
   end
 
   def create

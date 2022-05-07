@@ -1,0 +1,21 @@
+@events.map do |event|
+  date = event.date.to_s
+  start_time = event.start.to_s.split(' ')[1]
+  event_start = "#{date} #{start_time}"
+
+  end_time = event.end.to_s.split(' ')[1]
+  event_end = "#{date} #{end_time}"
+  {
+    id: event.id,
+    date: event.date,
+    start: event.start,
+    end: event.end,
+    user_id: event.user_id,
+    user: event.user,
+    menus: event.menus,
+    event: {
+      start: event_start,
+      end: event_end
+    }
+  }
+end
