@@ -1,6 +1,6 @@
 class MenusController < ApplicationController
 
-  # before_action :authenticate_admin, only: %i[create update destroy]
+  before_action :authenticate_admin, only: %i[create update destroy]
 
   def index
     menus = Menu.all
