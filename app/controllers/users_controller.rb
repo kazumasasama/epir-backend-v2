@@ -14,6 +14,12 @@ class UsersController < ApplicationController
   end
 
   def create
+    address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
+    # p address
+    results = Geocoder.search(address).first.coordinates
+    latitude = results[0].to_f
+    longitude = results[1].to_f
+
     user = User.new(
       first_name: params[:first_name],
       last_name: params[:last_name],
@@ -28,7 +34,9 @@ class UsersController < ApplicationController
       address: params[:address],
       note: params[:note],
       birthday: params[:birthday],
-      status: params[:status]
+      status: params[:status],
+      lat: latitude,
+      lon: longitude
     )
     if user.save
       render json: user.as_json
@@ -38,6 +46,12 @@ class UsersController < ApplicationController
   end
 
   def update
+    address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
+    # p address
+    results = Geocoder.search(address).first.coordinates
+    latitude = results[0].to_f
+    longitude = results[1].to_f
+
     user = User.find(params[:id])
     user.first_name = params[:first_name] || user.first_name
     user.last_name = params[:last_name] || user.last_name
@@ -53,6 +67,8 @@ class UsersController < ApplicationController
     user.note = params[:note] || user.note
     user.birthday = params[:birthday] || user.birthday
     user.status = params[:status] || user.status
+    user.lat = latitude || user.lat
+    user.lon = longitude || user.lon
     if user.save
       render json: user.as_json
     else
