@@ -1,10 +1,12 @@
 @events.map do |event|
   date = event.date.to_s
-  start_time = event.start.to_s.split(' ')[1]
+  start_time = event.start.to_s.split(' ')[1].delete_suffix(":00")
   event_start = "#{date} #{start_time}"
 
-  end_time = event.end.to_s.split(' ')[1]
+  end_time = event.end.to_s.split(' ')[1].delete_suffix(":00")
   event_end = "#{date} #{end_time}"
+
+  content = event.menus.map{|menu| menu.title}
   {
     id: event.id,
     date: event.date,
@@ -15,7 +17,9 @@
     menus: event.menus,
     event: {
       start: event_start,
-      end: event_end
+      end: event_end,
+      title: "#{event.user.first_name} #{event.user.last_name}",
+      content: content
     }
   }
 end

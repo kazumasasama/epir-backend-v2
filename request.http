@@ -47,6 +47,8 @@ DELETE http://localhost:3000/menus/4.json
 # User CRUD ==========
 ### index
 GET http://localhost:3000/users.json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE2NTIwNDA0NjF9.EoCzUxvUjJNUgzT8zEyhGJ4QY6_s9CwDVHM-adFBuco
 
 ### show
 GET http://localhost:3000/users/1.json
