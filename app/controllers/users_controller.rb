@@ -4,13 +4,13 @@ class UsersController < ApplicationController
   before_action :authenticate_admin, only: %i[index]
 
   def index
-    users = User.all
-    render json: users.as_json
+    @users = User.all
+    render template: "users/index"
   end
 
   def show
-    user = User.find(params[:id])
-    render json: user.as_json
+    @user = User.find(params[:id])
+    render template: "users/show"
   end
 
   def create
