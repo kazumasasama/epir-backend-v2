@@ -6,7 +6,6 @@
   end_time = event.end.to_s.split(' ')[1].delete_suffix(":00")
   event_end = "#{date} #{end_time}"
 
-  content = event.menus.map{|menu| menu.title}
   {
     id: event.id,
     date: event.date,
@@ -19,7 +18,8 @@
       start: event_start,
       end: event_end,
       title: "#{event.user.first_name} #{event.user.last_name}",
-      content: content
+      content: event.menus.map{|event| event.title},
+      content_object: event.menus.map{|event| event}
     }
   }
 end
