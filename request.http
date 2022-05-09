@@ -58,11 +58,11 @@ POST http://localhost:3000/users.json
 Content-Type: application/json
 
 {
-  "first_name": "Azumi",
-  "last_name": "Kobayashi",
+  "first_name": "Kaz",
+  "last_name": "Dev",
   "password": "password",
   "password_confirmation": "password",
-  "email": "test@test.com",
+  "email": "kaz.nyc.dev@gmail.com",
   "phone": "123-456-7890",
   "gender": "female",
   "zip": "10001",

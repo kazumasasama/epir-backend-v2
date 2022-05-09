@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     latitude = results[0].to_f
     longitude = results[1].to_f
 
-    user = User.new(
+    @user = User.new(
       first_name: params[:first_name],
       last_name: params[:last_name],
       password: params[:password],
@@ -38,10 +38,12 @@ class UsersController < ApplicationController
       lat: latitude,
       lon: longitude
     )
-    if user.save
-      render json: user.as_json
+    if @user.save
+      # 保存後にUserMailerを使ってwelcomeメールを送信
+      UserMailer.with(user: @user.id).welcome_email.deliver_now
+      render json: @user.as_json
     else
-      render json: {errors: user.errors.full_message}
+      render json: {errors: @user.errors.full_message}
     end
   end
 
