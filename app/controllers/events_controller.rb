@@ -14,14 +14,14 @@ class EventsController < ApplicationController
 
   def create
     # create Event
-    event = Event.new(
+    @event = Event.new(
       date: params[:date],
       start: params[:start],
       end: params[:end],
       user_id: params[:user_id],
       duration_total: params[:duration_total],
     )
-    if event.save
+    if @event.save
       # update BusinessTime
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
       business_times.each do |business_time|
@@ -33,9 +33,10 @@ class EventsController < ApplicationController
       end
       # create EventMenu
       menu_ids = params[:menus]
+      event_id = Event.last.id
       menu_ids.each do |menu_id|
         event_menu = EventMenu.new(
-          event_id: Event.last.id,
+          event_id: event_id,
           menu_id: menu_id,
           user_id: params[:user_id],
           status: "booked",
@@ -45,12 +46,14 @@ class EventsController < ApplicationController
           render json: {errors: event_menu.errors.full_message}
         end
       end
-      render json: event.as_json
+      @user = User.find(params[:user_id])
+      EventMailer.with(user: @user, event: event_id).event_confirm.deliver_now
+      render json: @event.as_json
     else
       business_times.each do |business_time|
         business_time.delete
       end
-      render json: {errors: event.errors.full_message}
+      render json: {errors: @event.errors.full_message}
     end
   end
 
@@ -125,7 +128,7 @@ class EventsController < ApplicationController
       end
     end
     if event.delete
-      render json: {message: "Event Deleted"}
+      render json: event
     else
       render json: {errors: event.errors.full_message}
     end

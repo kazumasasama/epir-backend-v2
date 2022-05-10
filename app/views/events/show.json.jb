@@ -14,6 +14,7 @@ content = @event.menus.map{|menu| menu.title}
   user: @event.user,
   menus: @event.menus,
   event: {
+    id: event.id,
     start: event_start,
     end: event_end,
     title: "#{@event.user.first_name} #{@event.user.last_name}",

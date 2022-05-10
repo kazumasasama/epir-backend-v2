@@ -1,0 +1,22 @@
+Hi <%= @user.first_name %>,
+
+Thank you for booking an appointment with us.
+Please confirm your appointment detail below.
+
+Date 
+  <%= @event.date %>
+Start time
+  <%= @event.start.strftime('%H:%M %Z') %>
+End time
+  <%= @event.end.strftime('%H:%M %Z') %>
+Menus
+  <% @event.menus.each do |event| %>
+    <%= event.title %>
+  <% end %>
+
+
+Please give us a call if you need to reschedule your appointment.
+Otherwise we'll see you soon!
+
+<< business name >>
+<< business info >>

@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @user.first_name %>,</h1>
+    <h2>Thank you for booking an appointment with us.</h2>
+    <p>Please confirm your appointment detail below.</p>
+    <p></p>
+    <h4>Date</h4>
+    <p><%= @event.date %></p>
+    <h4>Start Time</h4>
+    <p><%= @event.start.strftime('%H:%M %Z') %></p>
+    <h4>End Time</h4>
+    <p><%= @event.end.strftime('%H:%M %Z') %></p>
+    <h4>Menu</h4>
+    <ul>
+      <% @event.menus.each do |event| %>
+      <li><%= event.title %></li>
+      <% end %>
+    </ul>
+    <p></p>
+    <p>Please give us a call if you need to reschedule your appointment.</p>
+    <p>Otherwise we'll see you soon!</p>
+    <p></p>
+    <p>============</p>
+    <p>If you did not make this appointment, please contact us.</p>
+    <p><< business name >></p>
+    <p><< business email here >></p>
+  </body>
+</html>
