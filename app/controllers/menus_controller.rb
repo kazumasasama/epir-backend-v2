@@ -3,13 +3,13 @@ class MenusController < ApplicationController
   before_action :authenticate_admin, only: %i[create update destroy]
 
   def index
-    menus = Menu.all
-    render json: menus.as_json
+    @menus = Menu.all
+    render template: "menus/index"
   end
 
   def show
-    menu = Menu.find(params[:id])
-    render json: menu.as_json
+    @menu = Menu.find(params[:id])
+    render template: "menus/show"
   end
 
   def create

@@ -1,0 +1,8 @@
+{
+  id: @menu.id,
+  title: @menu.title,
+  price: @menu.price,
+  description: @menu.description,
+  active: @menu.active,
+  duration: @menu.duration
+}

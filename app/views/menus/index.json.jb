@@ -1,0 +1,14 @@
+active_menus = []
+inactive_menus = []
+
+@menus.map do |menu|
+  if menu.active == true
+    active_menus << menu
+  else
+    inactive_menus << menu
+  end
+end
+{
+  active: active_menus,
+  inactive: inactive_menus
+}
