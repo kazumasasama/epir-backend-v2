@@ -207,3 +207,7 @@ Content-Type: application/json
 
 ### destroy
 DELETE http://localhost:3000/business_times/7.json
+
+# STRIPE
+###
+POST http://localhost:3000/create-checkout-session
