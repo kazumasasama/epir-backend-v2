@@ -1,3 +1,23 @@
+event_menus = @user.events.map do |event|
+
+  date = event.date.to_s
+  start_time = event.start.to_s.split(' ')[1].delete_suffix(":00")
+  event_start = "#{date} #{start_time}"
+  end_time = event.end.to_s.split(' ')[1].delete_suffix(":00")
+
+  {
+    id: event.id,
+    date: date,
+    date_and_start: event_start,
+    start: start_time,
+    end: end_time,
+    duration_total: event.duration_total,
+    menus: event.menus,
+    created_at: event.created_at,
+    updated_at: event.updated_at
+  }
+end
+
 {
   id: @user.id,
   first_name: @user.first_name,
@@ -16,6 +36,8 @@
   lat: @user.lat,
   lon: @user.lon,
   admin: @user.admin,
+  events: event_menus,
   created_at: @user.created_at,
   updated_at: @user.updated_at
 }
+

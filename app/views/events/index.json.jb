@@ -6,21 +6,33 @@
   end_time = event.end.to_s.split(' ')[1].delete_suffix(":00")
   event_end = "#{date} #{end_time}"
 
+  user = event.user
+
   {
     id: event.id,
     date: event.date,
-    start: event.start,
-    end: event.end,
-    user_id: event.user_id,
-    user: event.user,
+    start: event_start,
+    end: event_end,
     menus: event.menus,
-    event: {
-      id: event.id,
-      start: event_start,
-      end: event_end,
-      title: "#{event.user.first_name} #{event.user.last_name}",
-      content: event.menus.map{|event| event.title},
-      content_object: event.menus.map{|event| event}
+    title: "#{event.user.first_name} #{event.user.last_name}",
+    content: event.menus.map{|event| event.title},
+    content_object: event.menus.map{|event| event},
+    user: {
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      full_name: "#{user.first_name} #{user.last_name}",
+      email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      zip: user.zip,
+      state: user.state,
+      city: user.city,
+      address: user.address,
+      note: user.note,
+      birthday: user.birthday,
+      status: user.status,
+      admin: user.admin
     }
   }
 end
