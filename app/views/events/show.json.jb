@@ -10,6 +10,8 @@ content = @event.menus.map{|menu| menu.title}
   date: @event.date,
   start: @event.start,
   end: @event.end,
+  status: @event.status,
+  color: @event.color,
   user_id: @event.user_id,
   user: @event.user,
   menus: @event.menus,

@@ -20,6 +20,8 @@ class EventsController < ApplicationController
       end: params[:end],
       user_id: params[:user_id],
       duration_total: params[:duration_total],
+      status: "booked",
+      color: params[:color]
     )
     if @event.save
       # update BusinessTime
@@ -67,11 +69,13 @@ class EventsController < ApplicationController
         render json: {errors: business_time.errors.full_message}
       end
     end
-    event.date = params[:date]
-    event.start = params[:start]
-    event.end = params[:end]
-    event.user_id = params[:user_id]
-    event.duration_total = params[:duration_total]
+    event.date = params[:date] || event.date
+    event.start = params[:start] || event.start
+    event.end = params[:end] || event.end
+    event.user_id = params[:user_id] || event.user_id
+    event.duration_total = params[:duration_total] || event.duration_total
+    event.status = params[:status] || event.status
+    event.color = params[:color] || event.color
     if event.save
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
       business_times.each do |business_time|
@@ -127,7 +131,8 @@ class EventsController < ApplicationController
         render json: {errors: em.errors.full_message}
       end
     end
-    if event.delete
+    event.status = "canceled"
+    if event.save
       render json: event
     else
       render json: {errors: event.errors.full_message}

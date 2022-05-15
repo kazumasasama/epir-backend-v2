@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_15_111053) do
     t.datetime "updated_at", null: false
     t.integer "duration_total"
     t.string "status"
-    t.string "class"
+    t.string "color"
   end
 
   create_table "menus", force: :cascade do |t|

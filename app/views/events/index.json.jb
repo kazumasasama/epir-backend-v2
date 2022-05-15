@@ -13,6 +13,8 @@
     date: event.date,
     start: event_start,
     end: event_end,
+    status: event.status,
+    color: event.color,
     menus: event.menus,
     title: "#{event.user.first_name} #{event.user.last_name}",
     content: event.menus.map{|event| event.title},
