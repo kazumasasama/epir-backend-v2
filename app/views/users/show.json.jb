@@ -13,6 +13,7 @@ event_menus = @user.events.map do |event|
     end: end_time,
     duration_total: event.duration_total,
     menus: event.menus,
+    total_spent: event.menus.map{|menu| menu.price.to_f}.sum,
     created_at: event.created_at,
     updated_at: event.updated_at
   }
