@@ -5,8 +5,12 @@
   <body>
     <h1>Hi <%= @user.first_name %>, Welcome to << business name >>.</h1>
     <p>Thank you for signup with us.</p>
-    <p>your user name is"<%= @user.first_name %>"</p>
-    <p>email address is "<%= @user.email %>"</p>
+    <p>your user name is <%= @user.first_name %></p>
+    <p>email address is <%= @user.email %></p>
+    <p>temporary password is <strong><%= @user.password %><strong></p>
+
+    <h5>Please login and reset your password.</h5>
+    <p><a href="http://localhost:8080/login"></a></p>
     
     <p>If you did not signup, please let us know.</p>
     <p><< business name >></p>

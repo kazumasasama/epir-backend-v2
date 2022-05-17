@@ -16,9 +16,14 @@ class UsersController < ApplicationController
   def create
     address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
     # p address
-    results = Geocoder.search(address).first.coordinates
-    latitude = results[0].to_f
-    longitude = results[1].to_f
+    if Geocoder.search(address)
+      results = Geocoder.search(address).first.coordinates
+      latitude = results[0].to_f
+      longitude = results[1].to_f
+    else
+      latitude = nil
+      longitude = nil
+    end
 
     @user = User.new(
       first_name: params[:first_name],
