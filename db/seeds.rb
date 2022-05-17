@@ -7,24 +7,24 @@
 #   Character.create(name: "Luke", movie: movies.first)
 Time.zone = 'Eastern Time (US & Canada)'
 
-Menu.create!(title: "VIO", duration: 60, price: 150, description: "Sensitive area")
+Menu.create!(title: "VIO", duration: 60, price: 130, description: "Sensitive area")
 Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
-Menu.create!(title: "Legs", duration: 60, price: 140, description: "Both legs")
+Menu.create!(title: "Legs", duration: 90, price: 150, description: "Both legs")
 
 User.create!(
   first_name: "Kaz",
   last_name: "Takai",
   password: "password",
-  email: "em@il.com",
+  email: "test@test.com",
   phone: "347-695-5677",
-  gender: "male",
+  gender: "N/A",
   zip: 10001,
   state: "NY",
   city: "New York",
   address: "545 W 30th St",
   note: "This is a note for Kaz",
   birthday: "1984-10-24",
-  status: "system"
+  status: "System"
 )
 
 date = Date.current
