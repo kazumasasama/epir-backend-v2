@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
 
   before_action :authenticate_user, only: %i[index show update destroy]
+  before_action :authenticate_admin, only: %i[index show update destroy]
 
   def index
     @events = Event.all
@@ -14,7 +15,7 @@ class EventsController < ApplicationController
 
   def create
     # create Event
-    @event = Event.new(
+    @new_event = Event.new(
       date: params[:date],
       start: params[:start],
       end: params[:end],
@@ -23,7 +24,7 @@ class EventsController < ApplicationController
       status: "booked",
       color: params[:color]
     )
-    if @event.save
+    if @new_event.save
       # update BusinessTime
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
       business_times.each do |business_time|
@@ -35,7 +36,7 @@ class EventsController < ApplicationController
       end
       # create EventMenu
       menu_ids = params[:menus]
-      event_id = Event.last.id
+      event_id = @new_event.id
       menu_ids.each do |menu_id|
         event_menu = EventMenu.new(
           event_id: event_id,
@@ -50,12 +51,13 @@ class EventsController < ApplicationController
       end
       @user = User.find(params[:user_id])
       EventMailer.with(user: @user, event: event_id).event_confirm.deliver_now
-      render json: @event.as_json
+      render json: @new_event.as_json
     else
       business_times.each do |business_time|
-        business_time.delete
+        business_time.available = true
+        business_time.save
       end
-      render json: {errors: @event.errors.full_message}
+      render json: {errors: @new_event.errors.full_message}
     end
   end
 
