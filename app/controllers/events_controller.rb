@@ -51,7 +51,7 @@ class EventsController < ApplicationController
         end
       end
       @user = User.find(params[:user_id])
-      EventMailer.with(user: @user, event: event_id).event_confirm.deliver_now
+      # EventMailer.with(user: @user, event: event_id).event_confirm.deliver_now
       render json: @new_event.as_json
     else
       business_times.each do |business_time|
