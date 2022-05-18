@@ -14,6 +14,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    binding.pry
     # create Event
     @new_event = Event.new(
       date: params[:date],
