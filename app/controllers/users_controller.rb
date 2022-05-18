@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     )
     if @user.save
       # 保存後にUserMailerを使ってwelcomeメールを送信
-      UserMailer.with(user: @user.id).welcome_email.deliver_now
+      # UserMailer.with(user: @user.id).welcome_email.deliver_now
       render json: @user.as_json
     else
       render json: {errors: @user.errors.full_message}
@@ -54,9 +54,14 @@ class UsersController < ApplicationController
 
   def update
     address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
-    results = Geocoder.search(address).first.coordinates
-    latitude = results[0].to_f
-    longitude = results[1].to_f
+    if Geocoder.search(address)
+      results = Geocoder.search(address).first.coordinates
+      latitude = results[0].to_f
+      longitude = results[1].to_f
+    else
+      latitude = nil
+      longitude = nil
+    end
     @user = User.find(params[:id])
     @user.first_name = params[:first_name] || @user.first_name
     @user.last_name = params[:last_name] || @user.last_name
