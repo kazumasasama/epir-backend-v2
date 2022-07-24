@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Time.zone = 'Asia/Tokyo'
+Time.zone = 'Eastern Time (US & Canada)'
 
 # Menu.create!(title: "VIO", duration: 60, price: 130, description: "Sensitive area")
 # Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
