@@ -11,39 +11,39 @@ Time.zone = 'Eastern Time (US & Canada)'
 # Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
 # Menu.create!(title: "Legs", duration: 90, price: 150, description: "Both legs")
 
-User.create!(
-  first_name: "Master",
-  last_name: "Admin",
-  password: "password",
-  email: "test@test.com",
-  phone: "123-456-7890",
-  gender: "N/A",
-  zip: 10001,
-  state: "NY",
-  city: "New York",
-  address: "545 W 30th St",
-  note: "This is a note for Master Admin",
-  birthday: "1900-01-01",
-  status: "System",
-  admin: true
-)
+# User.create!(
+#   first_name: "Master",
+#   last_name: "Admin",
+#   password: "password",
+#   email: "test@test.com",
+#   phone: "123-456-7890",
+#   gender: "N/A",
+#   zip: 10001,
+#   state: "NY",
+#   city: "New York",
+#   address: "545 W 30th St",
+#   note: "This is a note for Master Admin",
+#   birthday: "1900-01-01",
+#   status: "System",
+#   admin: true
+# )
 
-User.create!(
-  first_name: "User",
-  last_name: "1",
-  password: "password",
-  email: "user@user.com",
-  phone: "098-765-4321",
-  gender: "N/A",
-  zip: 10001,
-  state: "NY",
-  city: "New York",
-  address: "545 W 31th St",
-  note: "This is a note for User1",
-  birthday: "1900-01-01",
-  status: "System",
-  admin: false
-)
+# User.create!(
+#   first_name: "User",
+#   last_name: "1",
+#   password: "password",
+#   email: "user@user.com",
+#   phone: "098-765-4321",
+#   gender: "N/A",
+#   zip: 10001,
+#   state: "NY",
+#   city: "New York",
+#   address: "545 W 31th St",
+#   note: "This is a note for User1",
+#   birthday: "1900-01-01",
+#   status: "System",
+#   admin: false
+# )
 
 # date = Date.current
 
