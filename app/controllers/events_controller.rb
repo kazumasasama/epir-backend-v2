@@ -141,4 +141,23 @@ class EventsController < ApplicationController
     end
   end
 
+  def monthly
+    p params[:year]
+    p events = Event.where(date: "#{params[:year]}-01-01".."#{params[:year]}-12-31")
+    monthly_count = []
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '01'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '02'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '03'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '04'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '05'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '06'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '07'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '08'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '09'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '10'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '11'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '12'}.length
+    render json: monthly_count.as_json
+  end
+
 end
