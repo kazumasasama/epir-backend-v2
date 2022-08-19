@@ -141,23 +141,49 @@ class EventsController < ApplicationController
     end
   end
 
-  def monthly
-    p params[:year]
-    p events = Event.where(date: "#{params[:year]}-01-01".."#{params[:year]}-12-31")
-    monthly_count = []
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '01' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '02' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '03' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '04' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '05' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '06' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '07' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '08' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '09' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '10' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '11' && event.status == 'booked'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '12' && event.status == 'booked'}.length
-    render json: monthly_count.as_json
+  def monthlyReport
+
+    def getMonthlyEventsTotal(events)
+      monthly_count = []
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '01' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '02' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '03' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '04' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '05' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '06' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '07' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '08' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '09' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '10' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '11' && event.status == 'booked'}.length
+      monthly_count << events.filter{|event| event.date.strftime('%m') == '12' && event.status == 'booked'}.length
+      return monthly_count
+    end
+
+    def getMonthlyMenusTotal(events)
+      p menus = events.map{|event| event.menus}.flatten
+      pp grouped = menus.group_by{|key, value| key.title}
+      grouped.each do |key, value|
+        grouped[key] = value.length
+      end
+      return grouped
+    end
+
+    year = params[:year].to_i
+    
+    events = Event.where(date: "#{year}-01-01".."#{year}-12-31")
+    current_year_events = getMonthlyEventsTotal(events)
+    current_year_menus = getMonthlyMenusTotal(events)
+
+    year -= 1
+    events = Event.where(date: "#{year}-01-01".."#{year}-12-31")
+    last_year_events = getMonthlyEventsTotal(events)
+
+    result = {
+      events: [current_year_events, last_year_events],
+      menus: current_year_menus
+    }
+    render json: result.as_json
   end
 
 end

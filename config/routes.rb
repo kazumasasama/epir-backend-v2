@@ -4,10 +4,11 @@ Rails.application.routes.draw do
   
   resources :users
   resources :menus
-
-  resources :events
-  post "/events-monthly" => "events#monthly"
-
-  resources :event_menus
   resources :business_times
+  
+  resources :events
+  post "/monthly-report" => "events#monthlyReport"
+  
+  resources :event_menus
+  
 end
