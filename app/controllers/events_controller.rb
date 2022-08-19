@@ -145,18 +145,18 @@ class EventsController < ApplicationController
     p params[:year]
     p events = Event.where(date: "#{params[:year]}-01-01".."#{params[:year]}-12-31")
     monthly_count = []
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '01'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '02'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '03'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '04'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '05'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '06'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '07'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '08'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '09'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '10'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '11'}.length
-    monthly_count << events.filter{|event| event.date.strftime('%m') == '12'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '01' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '02' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '03' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '04' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '05' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '06' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '07' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '08' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '09' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '10' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '11' && event.status == 'booked'}.length
+    monthly_count << events.filter{|event| event.date.strftime('%m') == '12' && event.status == 'booked'}.length
     render json: monthly_count.as_json
   end
 
