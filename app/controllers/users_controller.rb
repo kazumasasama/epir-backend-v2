@@ -93,4 +93,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def usersStatics
+    def getMonthlyMenusTotal(events)
+      menus = events.filter{|event| event.status == 'booked'}.map{|event| event.menus}.flatten
+      grouped = menus.group_by{|key, value| key.title}
+      grouped.each do |key, value|
+        grouped[key] = value.length
+      end
+      return grouped
+    end
+
+    users = User.all
+    users_count = users.length
+    users_gender = users.group_by{|user| user.gender }
+    gender_count = {}
+    users_gender.each do |key, value|
+      gender_count[key] = value.length
+    end
+    render json: [users_count, gender_count].as_json
+  end
+
 end

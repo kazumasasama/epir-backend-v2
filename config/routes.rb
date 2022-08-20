@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   post "/sessions" => "sessions#create"
   
   resources :users
+  post "/users-statics" => "users#usersStatics"
+
   resources :menus
   resources :business_times
   
