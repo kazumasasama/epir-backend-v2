@@ -161,8 +161,8 @@ class EventsController < ApplicationController
     end
 
     def getMonthlyMenusTotal(events)
-      p menus = events.map{|event| event.menus}.flatten
-      pp grouped = menus.group_by{|key, value| key.title}
+      menus = events.filter{|event| event.status == 'booked'}.map{|event| event.menus}.flatten
+      grouped = menus.group_by{|key, value| key.title}
       grouped.each do |key, value|
         grouped[key] = value.length
       end
