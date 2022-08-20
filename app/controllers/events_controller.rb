@@ -196,7 +196,7 @@ class EventsController < ApplicationController
     current_menus = getMonthlyMenusTotal(current_events)
     current_monthly_sales = getMonthlySalesTotal(current_events)
 
-    current_monthly_menu_price = current_events.map{|event| event.menus }.flatten.group_by{|event| event.title }
+    current_monthly_menu_price = current_events.filter{|event| event.status == 'booked'}.map{|event| event.menus }.flatten.group_by{|event| event.title }
     current_total_price_by_menu = {}
     current_monthly_menu_price.each do |key, value|
       current_total_price_by_menu[key] = value.map{|v| v.price}.sum
