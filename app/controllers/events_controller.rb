@@ -190,9 +190,6 @@ class EventsController < ApplicationController
 
     year = params[:year].to_i
 
-    all_events = Event.all
-    sales_all_time = all_events.map{|event| event.price }.sum
-
     # current year
     current_events = Event.where(date: "#{year}-01-01".."#{year}-12-31")
     current_monthly_events = getMonthlyEventsTotal(current_events)
