@@ -204,7 +204,6 @@ class EventsController < ApplicationController
     current_monthly_menu_price.each do |key, value|
       current_total_price_by_menu[key] = value.map{|v| v.price}.sum
     end
-    current_total_price_by_menu
 
     # prev year
     prev_events = Event.where(date: "#{year - 1}-01-01".."#{year - 1}-12-31")
