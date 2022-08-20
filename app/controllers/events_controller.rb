@@ -22,7 +22,9 @@ class EventsController < ApplicationController
       user_id: params[:user_id],
       duration_total: params[:duration_total],
       status: "booked",
-      color: params[:color]
+      color: params[:color],
+      price: params[:price],
+      tax: params[:tax]
     )
     if @new_event.save
       # update BusinessTime
@@ -169,19 +171,63 @@ class EventsController < ApplicationController
       return grouped
     end
 
-    year = params[:year].to_i
-    
-    events = Event.where(date: "#{year}-01-01".."#{year}-12-31")
-    current_year_events = getMonthlyEventsTotal(events)
-    current_year_menus = getMonthlyMenusTotal(events)
+    def getMonthlySalesTotal(events)
+      monthly_total = []
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '01' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '02' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '03' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '04' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '05' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '06' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '07' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '08' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '09' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '10' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '11' && event.status == 'booked'}.map{|event| event.price }.sum
+      monthly_total << events.filter{|event| event.date.strftime('%m') == '12' && event.status == 'booked'}.map{|event| event.price }.sum
+      return monthly_total
+    end
 
-    year -= 1
-    events = Event.where(date: "#{year}-01-01".."#{year}-12-31")
-    last_year_events = getMonthlyEventsTotal(events)
+    year = params[:year].to_i
+
+    all_events = Event.all
+    sales_all_time = all_events.map{|event| event.price }.sum
+
+    # current year
+    current_events = Event.where(date: "#{year}-01-01".."#{year}-12-31")
+    current_monthly_events = getMonthlyEventsTotal(current_events)
+    current_menus = getMonthlyMenusTotal(current_events)
+    current_monthly_sales = getMonthlySalesTotal(current_events)
+
+    current_monthly_menu_price = current_events.map{|event| event.menus }.flatten.group_by{|event| event.title }
+    current_total_price_by_menu = {}
+    current_monthly_menu_price.each do |key, value|
+      current_total_price_by_menu[key] = value.map{|v| v.price}.sum
+    end
+    current_total_price_by_menu
+
+    # prev year
+    prev_events = Event.where(date: "#{year - 1}-01-01".."#{year - 1}-12-31")
+    prev_year_events = getMonthlyEventsTotal(prev_events)
+    prev_sales_monthly = getMonthlySalesTotal(prev_events)
 
     result = {
-      events: [current_year_events, last_year_events],
-      menus: current_year_menus
+      events: {
+        "currentMonthlyEvents": current_monthly_events,
+        "prevYearEvents": prev_year_events,
+        "currentMonthlyEventsSum": current_monthly_events.sum,
+        "prevYearEventsSum": prev_year_events.sum
+      },
+      menus: {
+        "currentMenus": current_menus,
+        "currentTotalPriceByMenu": current_total_price_by_menu
+      },
+      sales: {
+        "currentMonthlySales": current_monthly_sales,
+        "prevSalesMonthly": prev_sales_monthly,
+        "currentMonthlySalesSum": current_monthly_sales.sum,
+        "prevSalesMonthlySum": prev_sales_monthly.sum
+      }
     }
     render json: result.as_json
   end
