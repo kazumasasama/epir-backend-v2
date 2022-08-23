@@ -14,16 +14,16 @@ class UsersController < ApplicationController
   end
 
   def create
-    address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
-    # p address
-    if Geocoder.search(address)
-      results = Geocoder.search(address).first.coordinates
-      latitude = results[0].to_f
-      longitude = results[1].to_f
-    else
-      latitude = nil
-      longitude = nil
-    end
+    # address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
+    # # p address
+    # if Geocoder.search(address)
+    #   results = Geocoder.search(address).first.coordinates
+    #   latitude = results[0].to_f
+    #   longitude = results[1].to_f
+    # else
+    #   latitude = nil
+    #   longitude = nil
+    # end
 
     @user = User.new(
       first_name: params[:first_name],
@@ -40,8 +40,8 @@ class UsersController < ApplicationController
       note: params[:note],
       birthday: params[:birthday],
       status: params[:status],
-      lat: latitude,
-      lon: longitude
+      # lat: latitude,
+      # lon: longitude
     )
     if @user.save
       # 保存後にUserMailerを使ってwelcomeメールを送信
@@ -53,15 +53,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
-    if Geocoder.search(address)
-      results = Geocoder.search(address).first.coordinates
-      latitude = results[0].to_f
-      longitude = results[1].to_f
-    else
-      latitude = nil
-      longitude = nil
-    end
+    # address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
+    # if Geocoder.search(address)
+    #   results = Geocoder.search(address).first.coordinates
+    #   latitude = results[0].to_f
+    #   longitude = results[1].to_f
+    # else
+    #   latitude = nil
+    #   longitude = nil
+    # end
     @user = User.find(params[:id])
     @user.first_name = params[:first_name] || @user.first_name
     @user.last_name = params[:last_name] || @user.last_name
@@ -75,8 +75,8 @@ class UsersController < ApplicationController
     @user.note = params[:note] || @user.note
     @user.birthday = params[:birthday] || @user.birthday
     @user.status = params[:status] || @user.status
-    @user.lat = latitude || @user.lat
-    @user.lon = longitude || @user.lon
+    # @user.lat = latitude || @user.lat
+    # @user.lon = longitude || @user.lon
     if @user.save
       render template: "users/show"
     else
