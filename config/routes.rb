@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   
   resources :event_menus
   
+  post "/checkout" => "payments#checkout"
+  
 end
