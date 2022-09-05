@@ -28,7 +28,7 @@ class PaymentsController < ApplicationController
       tax_rates: [service_tax],
     }}
 
-    Stripe.api_key = 'sk_test_51LbjXDJC2O51yZ855ICl8ekPxg9lO11Pr4eCJ380g8btGVa40U2gl7g7TH3BnMEJSIHrQxclgdk43IZJB9n87QEA001iGI5cLz'
+    Stripe.api_key = Rails.application.credentials.STRIPE_TEST_API_KEY
     session = Stripe::Checkout::Session.create({
       line_items: line_items,
       mode: 'payment',
@@ -37,6 +37,27 @@ class PaymentsController < ApplicationController
       cancel_url: 'http://localhost:8080/appointments',
     })
     render json: session
+  end
+
+  def secret
+    p menu_ids = params[:menuIds]
+    p menus = Menu.where(id: menu_ids)
+    p tax = params[:tax]
+    p charge_amount = ((menus.map{|menu| menu.price}.sum + tax) * 100).round(0)
+
+    Stripe.api_key = Rails.application.credentials.STRIPE_TEST_API_KEY
+
+    intent = Stripe::PaymentIntent.create(
+        amount: charge_amount,
+        currency: 'usd',
+        automatic_payment_methods: {enabled: true},
+        
+    )
+    render json: intent.client_secret.as_json
+  end
+
+  def webhook
+
   end
 
 end

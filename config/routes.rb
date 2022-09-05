@@ -14,5 +14,8 @@ Rails.application.routes.draw do
   resources :event_menus
   
   post "/checkout" => "payments#checkout"
+  post "/secret" => "payments#secret"
+
+  post "/webhook" => "payments#webhook"
   
 end
