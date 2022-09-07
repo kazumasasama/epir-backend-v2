@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   post "/sessions" => "sessions#create"
   
+  resources :businesses, only: %i[show create update]
   resources :users
   post "/users-statics" => "users#usersStatics"
 
@@ -12,10 +13,7 @@ Rails.application.routes.draw do
   post "/monthly-report" => "events#monthlyReport"
   
   resources :event_menus
-  
   post "/checkout" => "payments#checkout"
   post "/secret" => "payments#secret"
-
-  post "/webhook" => "payments#webhook"
   
 end

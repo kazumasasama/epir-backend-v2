@@ -56,8 +56,4 @@ class PaymentsController < ApplicationController
     render json: intent.client_secret.as_json
   end
 
-  def webhook
-
-  end
-
 end

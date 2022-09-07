@@ -13,6 +13,20 @@
 
 # require 'faker'
 
+business = Business.new(
+  name: 'Biznesu',
+  email: 'biznesu@biznesu.com',
+  phone: '111-111-1111',
+  state: 'NY',
+  city: 'New York',
+  address: '111 W 111th Street',
+  zip: '10011',
+  url: 'https://biznesu.netlify.app/',
+  insta: 'biznesuInsta',
+  twitter: 'biznesuTwitter',
+  facebook: 'biznesuFB'
+)
+
 # User.create!(
 #   first_name: "Master",
 #   last_name: "Admin",
