@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post "/sessions" => "sessions#create"
   
   resources :businesses, only: %i[show create update]
+  resources :configs, only: %i[show create update]
   resources :users
   post "/users-statics" => "users#usersStatics"
 
