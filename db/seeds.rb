@@ -11,6 +11,8 @@
 # Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
 # Menu.create!(title: "Legs", duration: 90, price: 150, description: "Both legs")
 
+# require 'faker'
+
 # User.create!(
 #   first_name: "Master",
 #   last_name: "Admin",
@@ -44,6 +46,28 @@
 #   status: "System",
 #   admin: false
 # )
+
+# birthday = Time.zone.parse('1950-01-01') 
+
+# 100.times do
+#   User.create!(
+#     first_name: Faker::Name.unique.first_name,
+#     last_name: Faker::Name.unique.last_name,
+#     password: "password",
+#     email: Faker::Internet.email(domain: 'biznesu'),
+#     phone: Faker::PhoneNumber.cell_phone,
+#     gender: Faker::Gender.binary_type,
+#     zip: Faker::Address.zip,
+#     state: Faker::Address.state_abbr,
+#     city: Faker::Address.city,
+#     address: Faker::Address.street_address,
+#     note: Faker::JapaneseMedia::Doraemon.gadget,
+#     birthday: birthday,
+#     status: "User",
+#     admin: false
+#   )
+#   birthday += 10.days
+# end
 
 # date = Date.current
 
