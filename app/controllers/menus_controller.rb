@@ -28,10 +28,10 @@ class MenusController < ApplicationController
 
   def update
     menu = Menu.find(params[:id])
-    menu.title = params[:title]
-    menu.duration = params[:duration]
-    menu.price = params[:price]
-    menu.description = params[:description]
+    menu.title = params[:title] || menu.title
+    menu.duration = params[:duration] || menu.duration
+    menu.price = params[:price] || menu.price
+    menu.description = params[:description] || menu.description
     menu.active = params[:active]
     if menu.save
       render json: menu.as_json

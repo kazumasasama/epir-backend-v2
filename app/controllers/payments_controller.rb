@@ -40,10 +40,10 @@ class PaymentsController < ApplicationController
   end
 
   def secret
-    p menu_ids = params[:menuIds]
-    p menus = Menu.where(id: menu_ids)
-    p tax = params[:tax]
-    p charge_amount = ((menus.map{|menu| menu.price}.sum + tax) * 100).round(0)
+    menu_ids = params[:menuIds]
+    menus = Menu.where(id: menu_ids)
+    tax = params[:tax]
+    charge_amount = ((menus.map{|menu| menu.price}.sum + tax) * 100).round(0)
 
     Stripe.api_key = Rails.application.credentials.STRIPE_TEST_API_KEY
 

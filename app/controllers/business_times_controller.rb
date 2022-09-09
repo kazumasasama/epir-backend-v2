@@ -26,10 +26,10 @@ class BusinessTimesController < ApplicationController
 
   def update
     business_time = BusinessTime.find(params[:id])
-    business_time.date = params[:date]
-    business_time.time = params[:time]
-    business_time.available = params[:available]
-    business_time.event_id = params[:event_id]
+    business_time.date = params[:date] || business_time.date
+    business_time.time = params[:time] || business_time.time
+    business_time.available = params[:available] || business_time.available
+    business_time.event_id = params[:event_id] || business_time.event_id
     if business_time.save
       render json: business_time.as_json
     else

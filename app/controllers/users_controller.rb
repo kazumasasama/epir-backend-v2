@@ -46,6 +46,13 @@ class UsersController < ApplicationController
     if @user.save
       # 保存後にUserMailerを使ってwelcomeメールを送信
       # UserMailer.with(user: @user.id).welcome_email.deliver_now
+      user_status = UserStatus.new(
+        user_id: @user.id,
+        status_id: params[:status_id]
+      )
+      if !user_status.save
+        render json: {errors: user_status.errors.full_message}
+      end
       render json: @user.as_json
     else
       render json: {errors: @user.errors.full_message}
