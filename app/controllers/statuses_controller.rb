@@ -18,11 +18,11 @@ class StatusesController < ApplicationController
   end
 
   def update
-    p params[:status]
-    p status = Status.find(params[:id])
+    params[:status]
+    status = Status.find(params[:id])
     status.title = params[:title] || status.title
     status.status = params[:status]
-    p status
+    status
     if status.save
       render json: status.as_json
     else
