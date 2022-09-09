@@ -28,17 +28,17 @@ class BusinessesController < ApplicationController
 
   def update
     business = Business.find(params[:id])
-    business.name = params[:name]
-    business.email = params[:email]
-    business.phone = params[:phone]
-    business.state = params[:state]
-    business.city = params[:city]
-    business.address = params[:address]
-    business.zip = params[:zip]
-    business.url = params[:url]
-    business.insta = params[:insta]
-    business.twitter = params[:twitter]
-    business.facebook = params[:facebook]
+    business.name = params[:name] || business.name
+    business.email = params[:email] || business.email
+    business.phone = params[:phone] || business.phone
+    business.state = params[:state] || business.state
+    business.city = params[:city] || business.city
+    business.address = params[:address] || business.address
+    business.zip = params[:zip] || business.zip
+    business.url = params[:url] || business.url
+    business.insta = params[:insta] || business.insta
+    business.twitter = params[:twitter] || business.twitter
+    business.facebook = params[:facebook] || business.facebook
     if business.save
       render json: business.as_json
     else

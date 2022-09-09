@@ -26,10 +26,10 @@ class EventMenusController < ApplicationController
 
   def update
     em = EventMenu.find(params[:id])
-    em.event_id = params[:event_id]
-    em.menu_id = params[:menu_id]
-    em.user_id = params[:user_id]
-    em.status = params[:status]
+    em.event_id = params[:event_id] || em.event_id
+    em.menu_id = params[:menu_id] || em.menu_id
+    em.user_id = params[:user_id] || em.user_id
+    em.status = params[:status] || em.status
     if em.save
       render json: em.as_json
     else

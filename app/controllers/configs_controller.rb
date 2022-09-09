@@ -22,11 +22,11 @@ class ConfigsController < ApplicationController
 
   def update
     config = Config.find(params[:id])
-    config.lang = params[:lang]
-    config.tax = params[:tax]
-    config.start = params[:start]
-    config.end = params[:end]
-    config.interval = params[:interval]
+    config.lang = params[:lang] || config.lang
+    config.tax = params[:tax] || config.tax
+    config.start = params[:start] || config.start
+    config.end = params[:end] || config.end
+    config.interval = params[:interval] || config.interval
     if config.save
       render json: config.as_json
     else

@@ -11,6 +11,16 @@
 # Menu.create!(title: "Arms", duration: 30, price: 100, description: "Both arms")
 # Menu.create!(title: "Legs", duration: 90, price: 150, description: "Both legs")
 
+# Status.create!(
+#   title: 'Medicine',
+# )
+# Status.create!(
+#   title: 'Reffered',
+# )
+# Status.create!(
+#   title: 'Sensitive for Pain',
+# )
+
 # require 'faker'
 
 # business = Business.new(
