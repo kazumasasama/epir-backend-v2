@@ -2,7 +2,7 @@ class StatusesController < ApplicationController
 
   def index
     statuses = Status.all
-    active_status = statuses.select{|status| status.status == true}
+    active_status = statuses.select{|status| status.status == true}.sort_by{|status| status.id }
     render json: active_status.as_json
   end
 

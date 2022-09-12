@@ -14,6 +14,11 @@ class EventsController < ApplicationController
   end
 
   def create
+    user = User.find(params[:user_id])
+    calendar_color = nil
+    if user.statuses
+      calendar_color = 'danger'
+    end
     # create Event
     @new_event = Event.new(
       date: params[:date],
@@ -24,6 +29,7 @@ class EventsController < ApplicationController
       status: "booked",
       color: params[:color],
       price: params[:price],
+      calendar_color: calendar_color,
       tax: params[:tax]
     )
     if @new_event.save
@@ -64,6 +70,13 @@ class EventsController < ApplicationController
   end
 
   def update
+    user = User.find(params[:user_id])
+    if user.statuses
+      calendar_color = 'danger'
+    else
+      calendar_color = nil
+    end
+
     event = Event.find(params[:id])
     business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
     business_times.each do |business_time|

@@ -46,12 +46,17 @@ class UsersController < ApplicationController
     if @user.save
       # 保存後にUserMailerを使ってwelcomeメールを送信
       # UserMailer.with(user: @user.id).welcome_email.deliver_now
-      user_status = UserStatus.new(
-        user_id: @user.id,
-        status_id: params[:status_id]
-      )
-      if !user_status.save
-        render json: {errors: user_status.errors.full_message}
+      if params[:status_ids]
+        new_status = params[:status_ids]
+        new_status.each do |status_id|
+          us = UserStatus.new(
+            user_id: params[:id],
+            status_id: status_id
+          )
+          if !us.save
+            render json: {errors: us.errors.full_message}
+          end
+        end
       end
       render json: @user.as_json
     else
@@ -60,6 +65,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
     # address = "#{params[:address]}, #{params[:city]}, #{params[:state]}"
     # if Geocoder.search(address)
     #   results = Geocoder.search(address).first.coordinates
@@ -69,7 +75,24 @@ class UsersController < ApplicationController
     #   latitude = nil
     #   longitude = nil
     # end
-    @user = User.find(params[:id])
+    
+    if params[:status_ids]
+      current = UserStatus.where(user_id: @user.id)
+      current.each do |c|
+        c.delete
+      end
+      new_status = params[:status_ids]
+      new_status.each do |status_id|
+        us = UserStatus.new(
+          user_id: params[:id],
+          status_id: status_id
+        )
+        if !us.save
+          render json: {errors: us.errors.full_message}
+        end
+      end
+    end
+    
     @user.first_name = params[:first_name] || @user.first_name
     @user.last_name = params[:last_name] || @user.last_name
     @user.email = params[:email] || @user.email
@@ -81,7 +104,6 @@ class UsersController < ApplicationController
     @user.address = params[:address] || @user.address
     @user.note = params[:note] || @user.note
     @user.birthday = params[:birthday] || @user.birthday
-    @user.status = params[:status] || @user.status
     # @user.lat = latitude || @user.lat
     # @user.lon = longitude || @user.lon
     if @user.save
