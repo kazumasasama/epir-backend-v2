@@ -14,6 +14,7 @@
     note: user.note,
     birthday: user.birthday,
     status: user.status,
+    statuses: user.statuses,
     lat: user.lat,
     lon: user.lon,
     admin: user.admin,

@@ -13,7 +13,7 @@ event_menus = @user.events.map do |event|
     end: end_time,
     duration_total: event.duration_total,
     status: event.status,
-    class: event.color,
+    class: event.calendar_color,
     menus: event.menus,
     total_spent: event.menus.map{|menu| menu.price.to_f}.sum,
     created_at: event.created_at,
@@ -21,6 +21,7 @@ event_menus = @user.events.map do |event|
   }
 end
 
+status_ids = @user.statuses.map{|status| status.id}
 {
   id: @user.id,
   first_name: @user.first_name,
@@ -36,6 +37,8 @@ end
   note: @user.note,
   birthday: @user.birthday,
   status: @user.status,
+  status_ids: status_ids,
+  statuses: @user.statuses,
   lat: @user.lat,
   lon: @user.lon,
   admin: @user.admin,
