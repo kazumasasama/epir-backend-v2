@@ -59,7 +59,7 @@ class EventsController < ApplicationController
       end
       @user = User.find(params[:user_id])
       # EventMailer.with(user: @user, event: event_id).event_confirm.deliver_now
-      render json: @new_event.as_json
+      render template: "events/updated"
     else
       business_times.each do |business_time|
         business_time.available = true

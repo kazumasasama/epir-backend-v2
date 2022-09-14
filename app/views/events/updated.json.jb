@@ -1,0 +1,21 @@
+start_time = @new_event.start.to_s.split(' ')[1].delete_suffix(":00")
+event_start = "#{@new_event.date.to_s} #{start_time}"
+end_time = @new_event.end.to_s.split(' ')[1].delete_suffix(":00")
+event_end = "#{@new_event.date.to_s} #{end_time}"
+
+content = @new_event.menus.map{|menu| menu.title}
+
+{
+  id: @new_event.id,
+  date: @new_event.date,
+  start: event_start,
+  end: event_end,
+  status: @new_event.status,
+  color: @new_event.color,
+  class: @new_event.calendar_color,
+  content: content,
+  user_id: @new_event.user_id,
+  user: @new_event.user,
+  menus: @new_event.menus,
+  title: "#{@new_event.user.first_name} #{@new_event.user.last_name}"
+}
