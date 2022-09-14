@@ -4,7 +4,22 @@ end_time = @new_event.end.to_s.split(' ')[1].delete_suffix(":00")
 event_end = "#{@new_event.date.to_s} #{end_time}"
 
 content = @new_event.menus.map{|menu| menu.title}
+user = @new_event.user
 
+# {
+#   id: @new_event.id,
+#   date: @new_event.date,
+#   start: event_start,
+#   end: event_end,
+#   status: @new_event.status,
+#   color: @new_event.color,
+#   class: @new_event.calendar_color,
+#   content: content,
+#   user_id: @new_event.user_id,
+#   user: @new_event.user,
+#   menus: @new_event.menus,
+#   title: "#{@new_event.user.first_name} #{@new_event.user.last_name}"
+# }
 {
   id: @new_event.id,
   date: @new_event.date,
@@ -13,9 +28,26 @@ content = @new_event.menus.map{|menu| menu.title}
   status: @new_event.status,
   color: @new_event.color,
   class: @new_event.calendar_color,
-  content: content,
-  user_id: @new_event.user_id,
-  user: @new_event.user,
   menus: @new_event.menus,
-  title: "#{@new_event.user.first_name} #{@new_event.user.last_name}"
+  title: "#{@new_event.user.first_name} #{@new_event.user.last_name}",
+  content: content,
+  content_object: @new_event.menus.map{|event| event},
+  user: {
+    id: user.id,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    full_name: "#{user.first_name} #{user.last_name}",
+    email: user.email,
+    phone: user.phone,
+    gender: user.gender,
+    zip: user.zip,
+    state: user.state,
+    city: user.city,
+    address: user.address,
+    note: user.note,
+    birthday: user.birthday,
+    status: user.status,
+    statuses: user.statuses,
+    admin: user.admin
+  }
 }
