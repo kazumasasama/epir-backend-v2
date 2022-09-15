@@ -15,7 +15,7 @@ class EventsController < ApplicationController
 
   def create
     user = User.find(params[:user_id])
-    if user.statuses
+    if user.statuses.length == 0
       calendar_color = 'danger'
     else
       calendar_color = nil
@@ -72,7 +72,7 @@ class EventsController < ApplicationController
 
   def update
     user = User.find(params[:user_id])
-    if user.statuses
+    if user.statuses.length == 0
       calendar_color = 'danger'
     else
       calendar_color = nil
