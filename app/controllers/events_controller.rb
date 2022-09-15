@@ -181,11 +181,14 @@ class EventsController < ApplicationController
       monthly_total = []
       month = 1
       while month <= 12
-        monthly = events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked'}.map{|event| event.price }.sum
-        if !monthly
-          monthly = 0
+        booked = events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked'}
+        if booked.length == 0
+          booked = 0
+          monthly_total << booked
+        else
+          sum = booked.map{|event| event.price }.sum
+          monthly_total << sum
         end
-        monthly_total << monthly
         month += 1
       end
       return monthly_total
