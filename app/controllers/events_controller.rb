@@ -18,7 +18,7 @@ class EventsController < ApplicationController
     if user.statuses.length > 0
       calendar_color = 'danger'
     else
-      calendar_color = nil
+      calendar_color = 'success'
     end
     # create Event
     @new_event = Event.new(
@@ -75,7 +75,7 @@ class EventsController < ApplicationController
     if user.statuses.length > 0
       calendar_color = 'danger'
     else
-      calendar_color = nil
+      calendar_color = 'success'
     end
 
     event = Event.find(params[:id])
