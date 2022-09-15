@@ -95,6 +95,7 @@ class EventsController < ApplicationController
     event.status = params[:status] || event.status
     event.color = params[:color] || event.color
     event.price = params[:price] || event.price
+    event.tax = params[:tax] || event.tax
     event.calendar_color = calendar_color || event.calendar_color
     if event.save
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
