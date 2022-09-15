@@ -15,9 +15,10 @@ class EventsController < ApplicationController
 
   def create
     user = User.find(params[:user_id])
-    calendar_color = nil
     if user.statuses
       calendar_color = 'danger'
+    else
+      calendar_color = nil
     end
     # create Event
     @new_event = Event.new(
@@ -93,6 +94,8 @@ class EventsController < ApplicationController
     event.duration_total = params[:duration_total] || event.duration_total
     event.status = params[:status] || event.status
     event.color = params[:color] || event.color
+    event.price = params[:price] || event.price
+    event.calendar_color = calendar_color || event.calendar_color
     if event.save
       business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
       business_times.each do |business_time|
@@ -180,15 +183,11 @@ class EventsController < ApplicationController
     def getMonthlySalesTotal(events)
       monthly_total = []
       month = 1
+      booked = events.filter{|event| event.status == 'booked'}
       while month <= 12
-        booked = events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked'}
-        if booked.length == 0
-          booked = 0
-          monthly_total << booked
-        else
-          sum = booked.map{|event| event.price }.sum
-          monthly_total << sum
-        end
+        p monthly = booked.filter{|event| event.date.strftime('%m') == format('%02d', month)}.map{|event| event.price}
+        p'====='
+        monthly_total << monthly
         month += 1
       end
       return monthly_total
