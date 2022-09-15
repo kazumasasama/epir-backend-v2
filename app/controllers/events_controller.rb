@@ -160,18 +160,11 @@ class EventsController < ApplicationController
 
     def getMonthlyEventsTotal(events)
       monthly_count = []
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '01' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '02' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '03' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '04' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '05' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '06' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '07' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '08' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '09' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '10' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '11' && event.status == 'booked'}.length
-      monthly_count << events.filter{|event| event.date.strftime('%m') == '12' && event.status == 'booked'}.length
+      month = 1
+      while month <= 12
+        monthly_count << events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked'}.length
+        month += 1
+      end
       return monthly_count
     end
 
@@ -186,18 +179,11 @@ class EventsController < ApplicationController
 
     def getMonthlySalesTotal(events)
       monthly_total = []
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '01' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '02' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '03' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '04' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '05' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '06' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '07' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '08' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '09' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '10' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '11' && event.status == 'booked'}.map{|event| event.price }.sum
-      monthly_total << events.filter{|event| event.date.strftime('%m') == '12' && event.status == 'booked'}.map{|event| event.price }.sum
+      month = 1
+      while month <= 12
+        monthly_total << events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked'}.map{|event| event.price }.sum
+        month += 1
+      end
       return monthly_total
     end
 
