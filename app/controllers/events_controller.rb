@@ -213,14 +213,14 @@ class EventsController < ApplicationController
       monthly_count = []
       month = 1
       while month <= 12
-        monthly_count << events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked'}.length
+        monthly_count << events.filter{|event| event.date.strftime('%m') == format('%02d', month) && event.status == 'booked' && event.user.id != 2}.length
         month += 1
       end
       return monthly_count
     end
 
     def getMonthlyMenusTotal(events)
-      menus = events.filter{|event| event.status == 'booked'}.map{|event| event.menus}.flatten
+      menus = events.filter{|event| event.status == 'booked' && event.user.id != 2}.map{|event| event.menus}.flatten
       grouped = menus.group_by{|key, value| key.title}
       grouped.each do |key, value|
         grouped[key] = value.length
@@ -231,7 +231,7 @@ class EventsController < ApplicationController
     def getMonthlySalesTotal(events)
       monthly_total = []
       month = 1
-      booked = events.filter{|event| event.status == 'booked'}
+      booked = events.filter{|event| event.status == 'booked' && event.user.id != 2}
       while month <= 12
         monthly = booked.filter{|event| event.date.strftime('%m') == format('%02d', month)}.map{|event| event.price}.sum
         monthly_total << monthly
