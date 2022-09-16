@@ -1,5 +1,7 @@
 class ConfigsController < ApplicationController
 
+  before_action :authenticate_admin, only: %i[show create update]
+
   def show
     config = Config.find(params[:id])
     render json: config.as_json

@@ -1,4 +1,6 @@
 class BusinessesController < ApplicationController
+
+  before_action :authenticate_admin, only: %i[show create update]
   
   def show
     business = Business.find(params[:id])

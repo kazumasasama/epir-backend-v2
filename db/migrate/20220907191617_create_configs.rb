@@ -6,7 +6,7 @@ class CreateConfigs < ActiveRecord::Migration[7.0]
       t.integer :closing_id
       t.decimal :start
       t.decimal :end
-      t.string :interval
+      t.integer :interval
 
       t.timestamps
     end

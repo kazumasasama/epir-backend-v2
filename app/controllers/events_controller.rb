@@ -18,7 +18,11 @@ class EventsController < ApplicationController
     if user.statuses.length > 0
       calendar_color = 'danger'
     else
-      calendar_color = 'success'
+      if user.note
+        calendar_color = 'warning'
+      else
+        calendar_color = 'success'
+      end
     end
     # create Event
     @new_event = Event.new(
@@ -34,13 +38,24 @@ class EventsController < ApplicationController
       tax: params[:tax]
     )
     if @new_event.save
-      # update BusinessTime
-      business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
-      business_times.each do |business_time|
-        business_time.available = false
-        business_time.save
-        if !business_time.save
-          render json: {errors: business_time.errors.full_message}
+      config = Config.find(1)
+      interval = Event.new(
+        date: params[:date],
+        start: params[:end],
+        end: params[:end] + config.interval.minutes,
+        user_id: 2, # user id 2 => interval. See the seed file
+        duration_total: config.interval,
+        status: "booked",
+        price: 0,
+        calendar_color: 'gray',
+        tax: 0
+      )
+      if interval.save
+        # update BusinessTime
+        business_times = BusinessTime.where(date: params[:date], time: params[:start]...(end_time + config.interval.minutes))
+        business_times.each do |business_time|
+          business_time.available = false
+          business_time.save
         end
       end
       # create EventMenu
@@ -54,13 +69,10 @@ class EventsController < ApplicationController
           status: "booked",
         )
         event_menu.save
-        if !event_menu.save
-          render json: {errors: event_menu.errors.full_message}
-        end
       end
-      @user = User.find(params[:user_id])
+      # @user = User.find(params[:user_id])
       # EventMailer.with(user: @user, event: event_id).event_confirm.deliver_now
-      render template: "events/updated"
+      render template: "events/show"
     else
       business_times.each do |business_time|
         business_time.available = true
@@ -71,92 +83,127 @@ class EventsController < ApplicationController
   end
 
   def update
+    config = Config.find(1)
     user = User.find(params[:user_id])
     if user.statuses.length > 0
       calendar_color = 'danger'
     else
-      calendar_color = 'success'
+      if user.note
+        calendar_color = 'warning'
+      else
+        calendar_color = 'success'
+      end
     end
-
-    event = Event.find(params[:id])
-    business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
-    business_times.each do |business_time|
+    # open previous event time slots
+    @event = Event.find(params[:id])
+    prev_business_times = BusinessTime.where(date: @event.date, time: @event.start...(@event.end + config.interval.minutes))
+    prev_business_times.each do |business_time|
       business_time.available = true
       business_time.save
       if !business_time.save
         render json: {errors: business_time.errors.full_message}
       end
     end
-    event.date = params[:date] || event.date
-    event.start = params[:start] || event.start
-    event.end = params[:end] || event.end
-    event.user_id = params[:user_id] || event.user_id
-    event.duration_total = params[:duration_total] || event.duration_total
-    event.status = params[:status] || event.status
-    event.color = params[:color] || event.color
-    event.price = params[:price] || event.price
-    event.tax = params[:tax] || event.tax
-    event.calendar_color = calendar_color || event.calendar_color
-    if event.save
-      business_times = BusinessTime.where(date: params[:date], time: params[:start]...params[:end])
-      business_times.each do |business_time|
-        business_time.available = false
-        business_time.save
-        if !business_time.save
-          render json: {errors: business_time.errors.full_message}
+    # update interval
+    config = Config.find(1)
+    p prev_interval = Event.find_by(date: @event.date, start: @event.end)
+    current_interval = prev_interval
+    current_interval.date = params[:date]
+    current_interval.start = params[:end]
+    current_interval.end = Time.zone.parse(params[:end]) + config.interval.minutes
+    current_interval.user_id = 2 # user id 2 => interval. See the seed file
+    current_interval.duration_total = config.interval
+    current_interval.status = 'booked'
+    current_interval.price = 0
+    current_interval.tax = 0
+    current_interval.calendar_color = 'gray'
+    if current_interval.save
+      p current_interval
+      @event.date = params[:date] || @event.date
+      @event.start = params[:start] || @event.start
+      @event.end = params[:end] || @event.end
+      @event.user_id = params[:user_id] || @event.user_id
+      @event.duration_total = params[:duration_total] || @event.duration_total
+      @event.status = params[:status] || @event.status
+      @event.color = params[:color] || @event.color
+      @event.price = params[:price] || @event.price
+      @event.tax = params[:tax] || @event.tax
+      @event.calendar_color = calendar_color || @event.calendar_color
+      if @event.save
+        # close current time slots
+        current_business_times = BusinessTime.where(date: params[:date], time: params[:start]..(Time.zone.parse(params[:end]) + config.interval.minutes))
+        current_business_times.each do |business_time|
+          business_time.available = false
+          if business_time.save
+          else
+            render json: {errors: business_time.errors.full_message}
+          end
         end
-      end
-      menus = EventMenu.where(event_id: event.id, status: "booked")
-      menus.each do |menu|
-        menu.status = "canceled"
-        menu.save
-        if !menu.save
-          render json: {errors: menu.errors.full_message}
+        event_menus = EventMenu.where(event_id: @event.id)
+        menu_ids = params[:menus]
+        i = 0
+        event_menus.each do |menu|
+          menu.menu_id = menu_ids[i]
+          if menu.save
+          else
+            render json: {errors: event_menu.errors.full_message}
+          end
+          i += 1
         end
-      end
-      menu_ids = params[:menus]
-      menu_ids.each do |menu_id|
-        event_menu = EventMenu.new(
-          event_id: event.id,
-          menu_id: menu_id,
-          user_id: params[:user_id],
-          status: "booked"
-        )
-        event_menu.save
-        if !event_menu.save
-          render json: {errors: event_menu.errors.full_message}
+        render template: "events/show"
+      else
+        # put back interval
+        prev_interval.save
+        p prev_interval
+        # put back time slots
+        prev_business_times.each do |business_time|
+          business_time.available = true
+          if business_time.save
+          else
+            render json: {errors: business_time.errors.full_message}
+          end
         end
+        render json: {errors: @event.errors.full_message}
       end
-
-      render json: event.as_json
     else
-      render json: {errors: event.errors.full_message}
+      render json: {errors: current_interval.errors.full_message}
     end
+
   end
 
   def destroy
-    event = Event.find(params[:id])
-    business_times = BusinessTime.where(date: event.date, time: event.start...event.end)
+    config = Config.find(1)
+    @event = Event.find(params[:id])
+    business_times = BusinessTime.where(date: @event.date, time: @event.start..(@event.end + config.interval.minutes))
     business_times.each do |business_time|
       business_time.available = true
-      business_time.save
-      if !business_time.save
+
+      if business_time.save
+      else
         render json: {errors: business_time.errors.full_message}
       end
     end
-    event_menus = event.event_menus
+    event_menus = @event.event_menus
     event_menus.each do |em|
       em.status = "canceled"
-      em.save
-      if !em.save
+      if em.save
+      else
         render json: {errors: em.errors.full_message}
       end
     end
-    event.status = "canceled"
-    if event.save
-      render json: event
+    @event.status = "canceled"
+    if @event.save
     else
-      render json: {errors: event.errors.full_message}
+      render json: {errors: @event.errors.full_message}
+    end
+    p interval = Event.find(params[:id].to_i + 1)
+    interval.status = "canceled"
+    p interval
+    if interval.save
+      p true
+      render template: "events/show"
+    else
+      render json: {errors: @event.errors.full_message}
     end
   end
 

@@ -1,5 +1,7 @@
 class StatusesController < ApplicationController
 
+  before_action :authenticate_admin, only: %i[index create update]
+
   def index
     statuses = Status.all
     active_status = statuses.select{|status| status.status == true}.sort_by{|status| status.id }

@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_160434) do
     t.integer "closing_id"
     t.decimal "start"
     t.decimal "end"
-    t.string "interval"
+    t.integer "interval"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
