@@ -21,11 +21,11 @@ class EventsController < ApplicationController
       if user.note
         calendar_color = 'warning'
       else
-        calendar_color = 'success'
+        calendar_color = 'primary'
       end
     end
     # create Event
-    @new_event = Event.new(
+    @event = Event.new(
       date: params[:date],
       start: params[:start],
       end: params[:end],
@@ -37,12 +37,12 @@ class EventsController < ApplicationController
       calendar_color: calendar_color,
       tax: params[:tax]
     )
-    if @new_event.save
+    if @event.save
       config = Config.find(1)
       interval = Event.new(
         date: params[:date],
         start: params[:end],
-        end: params[:end] + config.interval.minutes,
+        end: Time.zone.parse(params[:end]) + config.interval.minutes,
         user_id: 2, # user id 2 => interval. See the seed file
         duration_total: config.interval,
         status: "booked",
@@ -52,7 +52,7 @@ class EventsController < ApplicationController
       )
       if interval.save
         # update BusinessTime
-        business_times = BusinessTime.where(date: params[:date], time: params[:start]...(end_time + config.interval.minutes))
+        business_times = BusinessTime.where(date: params[:date], time: params[:start]...(Time.zone.parse(params[:end]) + config.interval.minutes))
         business_times.each do |business_time|
           business_time.available = false
           business_time.save
@@ -60,7 +60,7 @@ class EventsController < ApplicationController
       end
       # create EventMenu
       menu_ids = params[:menus]
-      event_id = @new_event.id
+      event_id = @event.id
       menu_ids.each do |menu_id|
         event_menu = EventMenu.new(
           event_id: event_id,
@@ -78,7 +78,7 @@ class EventsController < ApplicationController
         business_time.available = true
         business_time.save
       end
-      render json: {errors: @new_event.errors.full_message}
+      render json: {errors: @event.errors.full_message}
     end
   end
 
@@ -91,7 +91,7 @@ class EventsController < ApplicationController
       if user.note
         calendar_color = 'warning'
       else
-        calendar_color = 'success'
+        calendar_color = 'primary'
       end
     end
     # open previous event time slots
@@ -131,7 +131,7 @@ class EventsController < ApplicationController
       @event.calendar_color = calendar_color || @event.calendar_color
       if @event.save
         # close current time slots
-        current_business_times = BusinessTime.where(date: params[:date], time: params[:start]..(Time.zone.parse(params[:end]) + config.interval.minutes))
+        current_business_times = BusinessTime.where(date: params[:date], time: params[:start]...(Time.zone.parse(params[:end]) + config.interval.minutes))
         current_business_times.each do |business_time|
           business_time.available = false
           if business_time.save
@@ -174,7 +174,7 @@ class EventsController < ApplicationController
   def destroy
     config = Config.find(1)
     @event = Event.find(params[:id])
-    business_times = BusinessTime.where(date: @event.date, time: @event.start..(@event.end + config.interval.minutes))
+    business_times = BusinessTime.where(date: @event.date, time: @event.start...(@event.end + config.interval.minutes))
     business_times.each do |business_time|
       business_time.available = true
 

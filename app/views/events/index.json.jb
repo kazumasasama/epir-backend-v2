@@ -13,6 +13,7 @@
     date: event.date,
     start: event_start,
     end: event_end,
+    duration_total: event.duration_total,
     status: event.status,
     color: event.color,
     class: event.calendar_color,

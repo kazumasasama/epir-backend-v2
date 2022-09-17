@@ -67,8 +67,8 @@ business = Business.create!(
 config = Config.create!(
   lang: 'en',
   tax: 4.5,
-  start: 9.5,
-  end: 20.0,
+  start: 10,
+  end: 20,
   interval: 30
 )
 
@@ -193,7 +193,7 @@ config = Config.find(1)
     if user.note
       calendar_color = 'warning'
     else
-      calendar_color = 'success'
+      calendar_color = 'primary'
     end
   end
   # create Event

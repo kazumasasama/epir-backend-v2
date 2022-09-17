@@ -5,10 +5,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    # system_users = User.where(id: [2, 3]) # account used as interval
-    # system_users.each do |su|
-    #   @users.delete(su)
-    # end
     render template: "users/index"
   end
 
