@@ -6,32 +6,52 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+# categories = [
+#   "SS Parts",
+#   "S Parts",
+#   "M Parts",
+#   "L Parts",
+#   "Discounted Package",
+#   "First Time Trial",
+#   "Facial"
+# ]
+
+# categories.each do |category|
+#   Category.create!(
+#     title: category
+#   )
+# end
+
 # Menu.create!(
 #   title: "First Time Diagnostics",
 #   duration: 30,
 #   price: 0,
-#   description: "First time diagnostics"
+#   description: "First time diagnostics",
+#   category_id: 6
 # )
 
 # Menu.create!(
 #   title: "Face",
 #   duration: 60,
 #   price: 150,
-#   description: "Full face"
+#   description: "Full face",
+#   category_id: 7
 # )
 
 # Menu.create!(
 #   title: "Arms",
 #   duration: 30,
 #   price: 100,
-#   description: "Both arms"
+#   description: "Both arms",
+#   category_id: 4
 # )
 
 # Menu.create!(
 #   title: "Legs",
 #   duration: 90,
 #   price: 200,
-#   description: "Both legs"
+#   description: "Both legs",
+#   category_id: 4,
 # )
 
 # statuses = [

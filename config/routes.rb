@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post "/users-statics" => "users#usersStatics"
   
   resources :statuses, only: %i[index create update]
+  resources :categories, only: %i[show index create update]
   resources :menus
   resources :business_times
   resources :event_menus
