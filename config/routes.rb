@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :statuses, only: %i[index create update]
   resources :categories, only: %i[show index create update]
   resources :menus
+  get "/grouped-menus" => "menus#grouped"
+  
   resources :business_times
   resources :event_menus
   

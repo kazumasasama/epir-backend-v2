@@ -208,9 +208,6 @@ Content-Type: application/json
 ### destroy
 DELETE http://localhost:3000/business_times/7.json
 
-# STRIPE
+# Grouped menus
 ###
-POST http://localhost:3000/create-checkout-session
-
-###
-POST http://localhost:4242/create-checkout-session
+GET http://localhost:3000/grouped-menus.json

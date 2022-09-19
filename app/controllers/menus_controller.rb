@@ -48,4 +48,18 @@ class MenusController < ApplicationController
       render json: {errors: menu.errors.full_message}
     end
   end
+
+  def grouped
+    menus = Menu.all
+    grouped = menus.group_by{|menu| menu.category_id}
+    # keys = grouped.keys
+    # active_categories = Category.all.select{|category| category.active == true}
+    # i = 0
+    # result = {}
+    # while i < active_categories.length
+    #   result["#{active_categories[i].title}"] = grouped[i + 1]
+    #   i += 1
+    # end
+    render json: grouped.as_json
+  end
 end

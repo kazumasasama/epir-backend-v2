@@ -51,7 +51,15 @@
 #   duration: 90,
 #   price: 200,
 #   description: "Both legs",
-#   category_id: 4,
+#   category_id: 4
+# )
+
+# Menu.create!(
+#   title: "Test Inactive Menu",
+#   duration: 90,
+#   price: 999,
+#   description: "Test Inactidve Menu",
+#   active: false
 # )
 
 # statuses = [
