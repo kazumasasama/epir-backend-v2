@@ -17,7 +17,9 @@ class MenusController < ApplicationController
       title: params[:title],
       duration: params[:duration],
       price: params[:price],
-      description: params[:description]
+      description: params[:description],
+      category_id: params[:category_id],
+      active: params[:active]
     )
     if menu.save
       render json: menu.as_json
@@ -32,6 +34,7 @@ class MenusController < ApplicationController
     menu.duration = params[:duration] || menu.duration
     menu.price = params[:price] || menu.price
     menu.description = params[:description] || menu.description
+    menu.category_id = params[:category_id] || menu.category_id
     menu.active = params[:active]
     if menu.save
       render json: menu.as_json
