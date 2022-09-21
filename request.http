@@ -4,7 +4,7 @@ POST http://localhost:3000/sessions.json
 Content-Type: application/json
 
 {
-  "email": "takaik@yahoo.com",
+  "email": "test@test.com",
   "password": "password"
 }
 
@@ -20,6 +20,7 @@ GET http://localhost:3000/menus/3.json
 ### create
 POST http://localhost:3000/menus.json
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NjM4NDgzMjR9.VgjMDhZub_BUJvZaM9xjmOgZ9venpAOXmCI43JyKZSs
 
 {
   "title": "Facial",
