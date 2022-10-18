@@ -257,7 +257,8 @@ business = Business.create!(
   address: '砧8丁目3-10 砧OKマンション202',
   zip: '157-0073',
   url: 'http://epir-soshigaya.com/',
-  insta: 'https://www.instagram.com/epir.soshigaya'
+  insta: 'https://www.instagram.com/epir.soshigaya',
+  line_id: 'epir.ikuta'
 )
 
 config = Config.create!(
@@ -274,6 +275,7 @@ User.create!(
   password: "password",
   email: "test@test.com",
   phone: "123-456-7890",
+  line_id: 'master.admin'
   gender: "該当なし",
   zip: 10001,
   state: "東京都",
@@ -319,6 +321,7 @@ i = 0
     password: "password",
     email: "user#{user_count}@user.com",
     phone: Faker::PhoneNumber.cell_phone,
+    line_id: "line_#{user_count}"
     gender: gender,
     zip: Faker::Address.zip,
     state: '東京都',

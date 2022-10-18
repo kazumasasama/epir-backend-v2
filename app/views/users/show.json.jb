@@ -29,6 +29,7 @@ status_ids = @user.statuses.map{|status| status.id}
   full_name: "#{@user.first_name} #{@user.last_name}",
   email: @user.email,
   phone: @user.phone,
+  line_id: @user.line_id,
   gender: @user.gender,
   zip: @user.zip,
   state: @user.state,

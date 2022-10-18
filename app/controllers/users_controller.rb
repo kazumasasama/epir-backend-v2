@@ -31,6 +31,7 @@ class UsersController < ApplicationController
       password_confirmation: params[:password_confirmation],
       email: params[:email],
       phone: params[:phone],
+      line_id: params[:line_id],
       gender: params[:gender],
       zip: params[:zip],
       state: params[:state],
@@ -109,6 +110,7 @@ class UsersController < ApplicationController
       @user.last_name = params[:last_name] || @user.last_name
       @user.email = params[:email] || @user.email
       @user.phone = params[:phone] || @user.phone
+      @user.line_id = params[:line_id] || @user.line_id
       @user.gender = params[:gender] || @user.gender
       @user.zip = params[:zip] || @user.zip
       @user.state = params[:state] || @user.state
