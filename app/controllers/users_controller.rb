@@ -137,23 +137,24 @@ class UsersController < ApplicationController
   end
 
   def usersStatics
-    def getMonthlyMenusTotal(events)
-      menus = events.filter{|event| event.status == 'booked'}.map{|event| event.menus}.flatten
-      grouped = menus.group_by{|key, value| key.title}
-      grouped.each do |key, value|
-        grouped[key] = value.length
-      end
-      return grouped
-    end
-
-    users = User.all
-    users_count = users.length
+    events = Event.where(status: 'booked')
+    sales_total = events.map{|event| event.price}.sum
+    users = User.where(admin: false)
+    users_count = users.length - 1 #remove interval
+    p sales_ave = (sales_total / users_count).to_formatted_s(:delimited)
+    p sales_ave.class
     users_gender = users.group_by{|user| user.gender }
     gender_count = {}
     users_gender.each do |key, value|
       gender_count[key] = value.length
     end
-    render json: [users_count, gender_count].as_json
+
+    
+    render json: {
+      userTotal: users_count,
+      genderTotal: gender_count,
+      salesAve: sales_ave
+    }.as_json
   end
 
 end

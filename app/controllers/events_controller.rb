@@ -273,8 +273,8 @@ class EventsController < ApplicationController
       sales: {
         "currentMonthlySales": current_monthly_sales,
         "prevSalesMonthly": prev_sales_monthly,
-        "currentMonthlySalesSum": current_monthly_sales.sum,
-        "prevSalesMonthlySum": prev_sales_monthly.sum
+        "currentMonthlySalesSum": current_monthly_sales.sum.to_formatted_s(:delimited),
+        "prevSalesMonthlySum": prev_sales_monthly.sum.to_formatted_s(:delimited)
       }
     }
     render json: result.as_json
