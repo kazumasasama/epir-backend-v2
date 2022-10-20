@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_18_194049) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_131842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,10 +45,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_194049) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "closing_days", force: :cascade do |t|
+    t.string "date"
+    t.string "start"
+    t.string "end"
+    t.string "title"
+    t.string "calendar_color"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "configs", force: :cascade do |t|
     t.string "lang"
     t.decimal "tax"
-    t.integer "closing_id"
     t.decimal "start"
     t.decimal "end"
     t.integer "interval"
@@ -74,7 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_194049) do
     t.datetime "updated_at", null: false
     t.integer "duration_total"
     t.string "status"
-    t.string "color"
     t.integer "price"
     t.decimal "tax"
     t.string "calendar_color"

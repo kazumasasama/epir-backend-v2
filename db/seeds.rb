@@ -269,6 +269,25 @@ config = Config.create!(
   interval: 30
 )
 
+year = Time.current.year
+if config.start % 1 != 0
+  start = "#{config.start.floor}:30"
+elsif config.start % 1 == 0
+  start = "#{config.start.floor}:00"
+end
+if config.end % 1 != 0
+  end_time = "#{config.end.floor}:30"
+elsif config.end % 1 == 0
+  end_time = "#{config.end.floor}:00"
+end
+closing_day = ClosingDay.create!(
+  start: "#{year}-01-01 #{start}",
+  end: "#{year}-01-01 #{end_time}",
+  title: '終日休み',
+  event_class: 'closing',
+  content: "<font-awesome-icon icon='fa-solid fa-ban' />"
+)
+
 User.create!(
   first_name: "Master",
   last_name: "Admin",
@@ -451,17 +470,34 @@ end
 # This file will be executed once a day at 12:00 AM by Heroku Scheduler
 # Comment out all seeds except BusinessTime below
 # =======================
+config = Config.find(1)
 
-# time_slot = 1800 # 30 min
-# date = Date.current.since(90.days)
-# start_time = Time.zone.parse("10:00:00")
-# 20.times do
-#   BusinessTime.create!(
-#     date: date,
-#     time: start_time,
-#     available: true
-#   )
-#   start_time += 1800.seconds # 30 min
-# end
+new_date = Date.current.since(90.days)
+closing_days = ClosingDay.all
+closing_days.each do |closed|
+  if closed.date == new_date
+    time_slot = 1800 # 30 min
+    start_time = Time.zone.parse("#{config.start}:00:00")
+    20.times do
+      BusinessTime.create!(
+        date: new_date,
+        time: start_time,
+        available: false
+      )
+      start_time += 1800.seconds # 30 min
+    end
+  else
+    time_slot = 1800 # 30 min
+    start_time = Time.zone.parse("#{config.start}:00:00")
+    20.times do
+      BusinessTime.create!(
+        date: new_date,
+        time: start_time,
+        available: true
+      )
+      start_time += 1800.seconds # 30 min
+    end
+  end
+end
 
 # =======================

@@ -1,0 +1,11 @@
+{
+  id: @closing_day.id,
+  date: @closing_day.date,
+  start: @closing_day.start,
+  end: @closing_day.end,
+  class: @closing_day.calendar_color,
+  title: @closing_day.title,
+  content: @closing_day.content,
+  created_at: @closing_day.created_at,
+  updated_at: @closing_day.updated_at
+}

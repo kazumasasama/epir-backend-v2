@@ -1,0 +1,2 @@
+class ClosingDay < ApplicationRecord
+end

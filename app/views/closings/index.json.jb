@@ -1,0 +1,13 @@
+@closing_days.map do |closing|
+  {
+  id: closing.id,
+  date: closing.date,
+  start: closing.start,
+  end: closing.end,
+  class: closing.calendar_color,
+  title: closing.title,
+  content: closing.content,
+  created_at: closing.created_at,
+  updated_at: closing.updated_at
+}
+end

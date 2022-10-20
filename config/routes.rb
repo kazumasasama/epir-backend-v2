@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   
   resources :businesses, only: %i[show create update]
   resources :configs, only: %i[show create update]
+  resources :closing_days, only: %i[index create update destroy]
 
   resources :users
   post "/users-statics" => "users#usersStatics"
