@@ -92,19 +92,25 @@ class UsersController < ApplicationController
       end
     end
 
-    if params[:newPassword]
-      if @user.password == params[:currentPassword]
-        if params[:newPassword] == params[:passwordConfirmation]
-          @user.password = params[:newPassword]
-          @user.password_confirmation = params[:passwordConfirmation]
-        else
-          render json: {errors: 'Password does not match. Please confirm new password and try again.'}
-          return
-        end
+    if params[:password]
+      if @user.authenticate(params[:current_password])
+        @user.password = params[:password]
       else
-        render json: {errors: 'Wrong password. Try again.'}
+        render json: {errors: "正しい現在のパスワードを入力してください"}
         return
       end
+      # if @user.authenticate(params[:current_password])
+      #   p "in"
+      #   if params[:password] == params[:password_confirmation]
+      #     @user.password = params[:password]
+      #   else
+      #     render json: {errors: '新しいパスワードとパスワード確認が一致していません。もう一度やり直してください'}
+      #     return
+      #   end
+      # else
+      #   render json: {errors: 'Wrong password. Try again.'}
+      #   return
+      # end
     else
       @user.first_name = params[:first_name] || @user.first_name
       @user.last_name = params[:last_name] || @user.last_name
