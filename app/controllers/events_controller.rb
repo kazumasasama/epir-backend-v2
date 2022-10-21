@@ -32,7 +32,6 @@ class EventsController < ApplicationController
       user_id: params[:user_id],
       duration_total: params[:duration_total],
       status: "booked",
-      color: params[:color],
       price: params[:price],
       calendar_color: calendar_color,
       tax: params[:tax]
@@ -125,7 +124,6 @@ class EventsController < ApplicationController
       @event.user_id = params[:user_id] || @event.user_id
       @event.duration_total = params[:duration_total] || @event.duration_total
       @event.status = params[:status] || @event.status
-      @event.color = params[:color] || @event.color
       @event.price = params[:price] || @event.price
       @event.tax = params[:tax] || @event.tax
       @event.calendar_color = calendar_color || @event.calendar_color
