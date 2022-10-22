@@ -275,7 +275,7 @@
 #   password: "password",
 #   email: "test@test.com",
 #   phone: "123-456-7890",
-#   line_id: 'master.admin'
+#   line_id: 'master.admin',
 #   gender: "該当なし",
 #   zip: 10001,
 #   state: "東京都",
@@ -321,7 +321,7 @@
 #     password: "password",
 #     email: "user#{user_count}@user.com",
 #     phone: Faker::PhoneNumber.cell_phone,
-#     line_id: "line_#{user_count}"
+#     line_id: "line_#{user_count}",
 #     gender: gender,
 #     zip: Faker::Address.zip,
 #     state: '東京都',
