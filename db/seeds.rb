@@ -270,8 +270,8 @@
 # )
 
 # User.create!(
-#   first_name: "Master",
-#   last_name: "Admin",
+#   first_name: "Admin",
+#   last_name: "Master",
 #   password: "password",
 #   email: "test@test.com",
 #   phone: "123-456-7890",
@@ -315,23 +315,23 @@
 #     user_note = nil
 #   end
 
-#   user = User.new(
-#     first_name: Faker::Name.unique.first_name,
-#     last_name: Faker::Name.last_name,
-#     password: "password",
-#     email: "user#{user_count}@user.com",
-#     phone: Faker::PhoneNumber.cell_phone,
-#     line_id: "line_#{user_count}",
-#     gender: gender,
-#     zip: Faker::Address.zip,
-#     state: '東京都',
-#     city: '世田谷区',
-#     address: Faker::Address.street_address,
-#     note: user_note,
-#     birthday: birthday,
-#     status: "User",
-#     admin: false
-#   )
+  # user = User.new(
+  #   first_name: Faker::Name.last_name,
+  #   last_name: Faker::Name.unique.first_name,
+  #   password: "password",
+  #   email: "user#{user_count}@user.com",
+  #   phone: Faker::PhoneNumber.cell_phone,
+  #   line_id: "line_#{user_count}",
+  #   gender: gender,
+  #   zip: Faker::Address.zip,
+  #   state: '東京都',
+  #   city: '世田谷区',
+  #   address: Faker::Address.street_address,
+  #   note: user_note,
+  #   birthday: birthday,
+  #   status: "User",
+  #   admin: false
+  # )
 #   user.save
 #   if user_count % 5 == 0
 #     UserStatus.create!(
