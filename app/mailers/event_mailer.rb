@@ -1,6 +1,4 @@
 class EventMailer < ApplicationMailer
-
-  default from: Rails.application.credentials[:GMAIL_ADDRESS]
   
   def event_confirm
     @user = params[:user]

@@ -1,0 +1,6 @@
+<h3><%= @user.last_name %> 様</h3>
+
+<p>脱毛サロン エピア epiR予約サイトにご登録いただきありがとうございます。</p>
+<p>下記リンクをクリックしてお客様のアカウントを有効にしてください。</p>
+
+<a href="<%= "http:localhost:8080/activate/#{@user.activation_token}/#{@user.email}" %>">アカウントを有効にする</a>

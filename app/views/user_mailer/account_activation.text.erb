@@ -1,0 +1,6 @@
+<%= @user.last_name %> 様
+
+脱毛サロン エピア epiRにご登録いただきありがとうございます。
+下記リンクにアクセスしてお客様のアカウントを有効にしてください。
+
+<%= "http:localhost:8080/activate/#{@user.activation_token}/#{@user.email}" %>
