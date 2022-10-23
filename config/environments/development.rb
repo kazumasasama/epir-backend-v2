@@ -33,21 +33,19 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
-
-  config.action_mailer.default_url_options = {  host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = {  host: 'localhost', port: 3000, protocol: 'http' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     # don't change address, domain and port
     address: 'smtp.gmail.com',
     domain: 'gmail.com',
     port: 587,
-    user_name: Rails.application.credentials[:GMAIL_ADDRESS],  #Gmailアドレス（credentials.yml.encに記載）
-    password: Rails.application.credentials[:GMAIL_API_KEY_TEST],  #アプリパスワード（credentials.yml.encに記載）
+    user_name: Rails.application.credentials[:GMAIL_ADDRESS],
+    password: Rails.application.credentials[:GMAIL_API_KEY_TEST],
     # メールサーバー側で認証をするときはパスワードをBase64でエンコードする必要がある
     authentication: :login
   }

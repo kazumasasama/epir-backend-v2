@@ -2,6 +2,9 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
+    if !user.activated
+      render json: {error: "このアカウントが有効化されていません。有効化してからログインしてください。"}
+    end
     if user && user.authenticate(params[:password])
       jwt = JWT.encode(
         {
@@ -20,7 +23,7 @@ class SessionsController < ApplicationController
         last_login: last_login
       }, status: :created
     else
-      render json: {}, status: :unauthorized
+      render json: {error: "Unauthorized User."}, status: :unauthorized
     end
   end
   

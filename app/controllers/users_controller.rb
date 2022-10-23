@@ -44,8 +44,6 @@ class UsersController < ApplicationController
       # lon: longitude
     )
     if @user.save
-      # 保存後にUserMailerを使ってwelcomeメールを送信
-      # UserMailer.with(user: @user.id).welcome_email.deliver_now
       if params[:status_ids]
         new_status = params[:status_ids]
         new_status.each do |status_id|
@@ -58,6 +56,7 @@ class UsersController < ApplicationController
           end
         end
       end
+      UserMailer.account_activation(@user).deliver_now
       render json: @user.as_json
     else
       render json: {errors: @user.errors.full_message}
