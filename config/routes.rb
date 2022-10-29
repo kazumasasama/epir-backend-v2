@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/edit'
   
   resources :businesses,            only: %i[show create update]
   resources :configs,               only: %i[show create update]
@@ -8,7 +6,7 @@ Rails.application.routes.draw do
   resources :statuses,              only: %i[index create update]
   resources :categories,            only: %i[show index create update]
   resources :account_activations,   only: %i[edit]
-  resources :password_resets,       only: %i[new create edit update]
+  resources :password_resets,       only: %i[create update]
   resources :users
   resources :menus
   resources :business_times
