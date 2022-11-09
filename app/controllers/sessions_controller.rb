@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if !user.activated
+    if user.activated == false
       render json: {error: "このアカウントが有効化されていません。有効化してからログインしてください。"}
     end
     if user && user.authenticate(params[:password])
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
         last_login: last_login
       }, status: :created
     else
-      render json: {error: "Unauthorized User."}, status: :unauthorized
+      render json: {error: "無効なログイン"}, status: :unauthorized
     end
   end
   

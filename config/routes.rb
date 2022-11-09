@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :statuses,              only: %i[index create update]
   resources :categories,            only: %i[show index create update]
   resources :account_activations,   only: %i[edit]
+  resources :password_resets,       only: %i[create update]
   resources :users
   resources :menus
   resources :business_times
